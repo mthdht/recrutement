@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Organization;
 use App\Http\Requests\StoreOrganizationRequest;
 use App\Http\Requests\UpdateOrganizationRequest;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class OrganizationController extends Controller
 {
@@ -13,7 +15,7 @@ class OrganizationController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('organizations/Index', ['organizations' => Auth::user()->organizations]);
     }
 
     /**
