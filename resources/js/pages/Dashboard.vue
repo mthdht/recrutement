@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
-import { type BreadcrumbItem } from '@/types';
+import { type BreadcrumbItem, type Organization } from '@/types';
 import { Head } from '@inertiajs/vue3';
 import PlaceholderPattern from '../components/PlaceholderPattern.vue';
+
+defineProps<{
+    organizations: Organization[];
+}>();
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -10,6 +14,8 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/dashboard',
     },
 ];
+
+
 </script>
 
 <template>

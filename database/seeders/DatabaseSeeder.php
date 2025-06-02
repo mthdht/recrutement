@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $matt = User::factory()
+            ->hasOrganizations(3)
             ->create([
                 'name' => 'mth',
                 'email' => 'mthdht@gmail.com',
