@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Gallery;
-use App\Http\Requests\StoreGalleryRequest;
-use App\Http\Requests\UpdateGalleryRequest;
+use App\Models\Organization;
+use App\Http\Requests\StoreOrganizationRequest;
+use App\Http\Requests\UpdateOrganizationRequest;
 
-class GalleryController extends Controller
+class OrganizationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $galleries = auth()->user()->galleries()->latest();
-
-        dd($galleries);
+        //
     }
 
     /**
@@ -29,7 +27,7 @@ class GalleryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreGalleryRequest $request)
+    public function store(StoreOrganizationRequest $request)
     {
         //
     }
@@ -37,7 +35,7 @@ class GalleryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Gallery $gallery)
+    public function show(Organization $organization)
     {
         //
     }
@@ -45,7 +43,7 @@ class GalleryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Gallery $gallery)
+    public function edit(Organization $organization)
     {
         //
     }
@@ -53,7 +51,7 @@ class GalleryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateGalleryRequest $request, Gallery $gallery)
+    public function update(UpdateOrganizationRequest $request, Organization $organization)
     {
         //
     }
@@ -61,7 +59,7 @@ class GalleryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Gallery $gallery)
+    public function destroy(Organization $organization)
     {
         //
     }

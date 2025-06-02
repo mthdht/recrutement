@@ -17,30 +17,29 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $matt = User::factory()
-            ->hasGalleries(3)
             ->create([
-                'name' => 'matt',
-                'email' => 'matt@example.com',
+                'name' => 'mth',
+                'email' => 'mthdht@gmail.com',
             ]);
 
-        $max = User::factory()->create([
-            'name' => 'max',
-            'email' => 'max@example.com',
-        ]);
+        // $max = User::factory()->create([
+        //     'name' => 'max',
+        //     'email' => 'max@example.com',
+        // ]);
 
-        $eric = User::factory()->create([
-            'name' => 'eric',
-            'email' => 'eric@example.com',
-        ]);
+        // $eric = User::factory()->create([
+        //     'name' => 'eric',
+        //     'email' => 'eric@example.com',
+        // ]);
 
         
-        Role::create(['name' => 'admin']);
-        Role::create(['name' => 'manager']);
-        Role::create(['name' => 'recruiter']);
-        Role::create(['name' => 'candidate']);
+        // Role::create(['name' => 'admin']);
+        // Role::create(['name' => 'manager']);
+        // Role::create(['name' => 'recruiter']);
+        // Role::create(['name' => 'candidate']);
 
-        $matt->assignRole('admin');
-        $max->assignRole('recruiter');
-        $eric->assignRole('candidate');
+        // $matt->assignRole('admin');
+        // $max->assignRole('recruiter');
+        // $eric->assignRole('candidate');
     }
 }
