@@ -11,6 +11,16 @@ class Organization extends Model
     /** @use HasFactory<\Database\Factories\OrganizationFactory> */
     use HasFactory;
 
+     /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'title',
+        'description'
+    ];
+
     public function users() {
         return $this->belongsToMany(User::class);
     }
