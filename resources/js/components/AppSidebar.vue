@@ -16,7 +16,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Organisations',
-        href: '/organisations',
+        href: '/organizations',
         icon: Group,
     },
 ];

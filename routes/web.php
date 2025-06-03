@@ -16,7 +16,7 @@ Route::get('dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::resource('organisations', OrganizationController::class);
+    Route::resource('organizations', OrganizationController::class);
 });
 
 require __DIR__.'/settings.php';

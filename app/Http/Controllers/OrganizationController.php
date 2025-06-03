@@ -23,15 +23,20 @@ class OrganizationController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('organizations/Create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreOrganizationRequest $request)
-    {
-        //
+    {   
+        $organization = Organization::create($request->all());
+
+        // Associer l'utilisateur à cette organisation
+        Auth::user()->organizations()->attach($organization);
+
+        return redirect()->route('organizations.index')->with('success', 'Organisation créée avec succès');
     }
 
     /**
