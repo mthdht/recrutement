@@ -19,7 +19,7 @@ defineProps<{
                 <Breadcrumbs :breadcrumbs="breadcrumbs" />
             </template>
         </div>
-        <div class="action float-right">
+        <div class="action float-right flex gap-2 items-center">
             <slot></slot>
         </div>
     </header>

@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem, type Organization } from '@/types';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import PlaceholderPattern from '../../components/PlaceholderPattern.vue';
 import Button from '@/components/ui/button/Button.vue';
+import { Trash } from 'lucide-vue-next';
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogFooter, DialogTrigger, DialogTitle } from '@/components/ui/dialog';
 
 
 const props = defineProps<{
@@ -21,6 +23,11 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
+const form = useForm({
+  title: '',
+  description: '',
+})
+
 
 </script>
 
@@ -33,6 +40,36 @@ const breadcrumbs: BreadcrumbItem[] = [
              <Button class="bg-yellow-500 hover:bg-yellow-400 font-semibold" asChild>
                 <Link :href="route('organizations.edit', {organization: props.organization.id})">Edit</Link>
              </Button>
+
+             <Dialog>
+                <DialogTrigger as-child>
+                    <Button variant="destructive" class="font-semibold" title="delete organisation">
+                        <Trash class="stroke-3"></Trash>
+                    </Button>
+                </DialogTrigger>
+                <DialogContent>
+                        <DialogHeader class="space-y-3">
+                            <DialogTitle>Are you sure you want to delete your account?</DialogTitle>
+                            <DialogDescription>
+                                Once your account is deleted, all of its resources and data will also be permanently deleted. Please enter your
+                                password to confirm you would like to permanently delete your account.
+                            </DialogDescription>
+                        </DialogHeader>
+
+
+                        <DialogFooter class="gap-2">
+                            <DialogClose as-child>
+                                <Button variant="secondary"> Cancel </Button>
+                            </DialogClose>
+
+                            <Button variant="destructive" :disabled="form.processing">
+                                <Link :href="route('organizations.destroy', {organization: props.organization.id})" method="delete">
+                                    <Trash class="stroke-3"></Trash>
+                                </Link>
+                            </Button>
+                        </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </template>
 
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
