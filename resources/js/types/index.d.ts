@@ -38,7 +38,7 @@ export interface User {
 
 export interface Organization {
     id: number;
-    name: string;
+    title: string;
     description?: string;
 }
 

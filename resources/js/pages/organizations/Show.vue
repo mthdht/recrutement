@@ -6,14 +6,18 @@ import PlaceholderPattern from '../../components/PlaceholderPattern.vue';
 import Button from '@/components/ui/button/Button.vue';
 
 
-defineProps<{
-    organizations: Organization[];
+const props = defineProps<{
+    organization: Organization;
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Organisations',
         href: '/organizations',
+    },
+    {
+        title: props.organization.title,
+        href: route('organizations.show', {organization: props.organization.id}),
     },
 ];
 
@@ -26,8 +30,8 @@ const breadcrumbs: BreadcrumbItem[] = [
     <AppLayout :breadcrumbs="breadcrumbs">
         <template #action>
             <!-- content for the header slot -->
-             <Button class="bg-emerald-500 hover:bg-emerald-400 font-semibold" asChild>
-                <Link :href="route('organizations.create')">add</Link>
+             <Button class="bg-yellow-500 hover:bg-yellow-400 font-semibold" asChild>
+                <Link :href="route('organizations.edit', {organization: props.organization.id})">Edit</Link>
              </Button>
         </template>
 
@@ -35,8 +39,6 @@ const breadcrumbs: BreadcrumbItem[] = [
             <div class="grid auto-rows-min gap-4 md:grid-cols-3">
                 <div 
                     class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border"
-                    v-for="organization in organizations"
-                    :key="organization.id"
                 >
                     <PlaceholderPattern />
                     <pre>{{  organization }}</pre>

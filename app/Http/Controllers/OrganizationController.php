@@ -36,7 +36,7 @@ class OrganizationController extends Controller
         // Associer l'utilisateur à cette organisation
         Auth::user()->organizations()->attach($organization);
 
-        return redirect()->route('organizations.index')->with('success', 'Organisation créée avec succès');
+        return redirect()->route('organizations.show', [$organization])->with('success', 'Organisation créée avec succès');
     }
 
     /**
@@ -44,7 +44,9 @@ class OrganizationController extends Controller
      */
     public function show(Organization $organization)
     {
-        //
+        return Inertia::render('organizations/Show', [
+            'organization' => $organization,
+        ]);
     }
 
     /**
@@ -52,7 +54,9 @@ class OrganizationController extends Controller
      */
     public function edit(Organization $organization)
     {
-        //
+        return Inertia::render('organizations/Edit', [
+            'organization' => $organization,
+        ]);
     }
 
     /**
@@ -60,7 +64,9 @@ class OrganizationController extends Controller
      */
     public function update(UpdateOrganizationRequest $request, Organization $organization)
     {
-        //
+        $organization->update($request->all());
+
+        return redirect()->route('organizations.show', [$organization])->with('success', 'Organisation modifier avec succès');
     }
 
     /**
