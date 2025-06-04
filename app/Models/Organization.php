@@ -23,7 +23,8 @@ class Organization extends Model
         'street',
         'postcode',
         'country',
-        'city'
+        'city',
+        'logo'
     ];
 
     public function users() {

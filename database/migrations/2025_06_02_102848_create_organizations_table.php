@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('postcode')->nullable();
             $table->string('city')->nullable();
             $table->string('country')->nullable();
-            $table->string('logo_path')->nullable();
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }

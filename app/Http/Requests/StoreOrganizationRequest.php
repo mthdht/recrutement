@@ -24,7 +24,8 @@ class StoreOrganizationRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string']
+            'description' => ['nullable', 'string'],
+            'logo' => ['nullable', 'image']
         ];
     }
 
@@ -37,7 +38,6 @@ class StoreOrganizationRequest extends FormRequest
     {
         return [
             'title.required' => 'A title is required',
-            'body.required' => 'A message is required',
         ];
     }
 }

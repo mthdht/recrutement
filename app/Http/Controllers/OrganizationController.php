@@ -31,14 +31,20 @@ class OrganizationController extends Controller
      */
     public function store(StoreOrganizationRequest $request)
     {   
+        $path= '';
+        if ($request->hasFile('logo')) {
+            $path = $request->file('logo')->storeAs('logos', $request->logo->getClientOriginalName(), 'public');
+        }
+
         $organization = Organization::create([
             'title' => $request->title,
             'description' => $request->description,
-            'address' => $request->fullAddress['formatted'],
-            "street" => $request->fullAddress['street'],
-            "postcode" => $request->fullAddress['postcode'],
-            "city" => $request->fullAddress['city'],
-            "country" => "France"
+            'address' => $request->address,
+            "street" => $request->street,
+            "postcode" => $request->postcode,
+            "city" => $request->city,
+            "country" => "France",
+            "logo" => $path
         ]);
 
         // Associer l'utilisateur à cette organisation
@@ -72,7 +78,21 @@ class OrganizationController extends Controller
      */
     public function update(UpdateOrganizationRequest $request, Organization $organization)
     {
-        $organization->update($request->all());
+        $path = '';
+        if ($request->hasFile('logo')) {
+            $path = $request->file('logo')->storeAs('logos', $request->logo->getClientOriginalName(), 'public');
+        }
+
+        $organization->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'address' => $request->address,
+            "street" => $request->street,
+            "postcode" => $request->postcode,
+            "city" => $request->city,
+            "country" => "France",
+            "logo" => $path
+        ]);
 
         return redirect()->route('organizations.show', [$organization])->with('success', 'Organisation modifier avec succès');
     }

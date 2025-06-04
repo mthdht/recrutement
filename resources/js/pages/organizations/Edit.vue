@@ -15,17 +15,23 @@ const props = defineProps<{
 }>();
 
 const form = useForm({
-    title: props.organization.title,
-    description: props.organization.description,
-    fullAddress: {
-        street: props.organization.street || '',
-        postcode: props.organization.postcode || '',
-        city: props.organization.city || '',
-        country: 'France', // L'API ne le renvoie pas, donc on force FR
-        address: props.organization.address || '',
-    }
+    _method: 'put',
+    title: props.organization.title || '',
+    description: props.organization.description || '',
+    street: props.organization.street || '',
+    postcode: props.organization.postcode || '',
+    city: props.organization.city || '',
+    country: 'France', // L'API ne le renvoie pas, donc on force FR
+    address: props.organization.address || '',
+    logo: null as File | null
 })
 
+function handleLogoChange(event: Event) {
+  const input = event.target as HTMLInputElement
+  if (input?.files?.[0]) {
+    form.logo = input.files[0]
+  }
+}
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -50,7 +56,12 @@ const breadcrumbs: BreadcrumbItem[] = [
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="p-4">
-            <form @submit.prevent="form.put(route('organizations.update', {organization: props.organization.id}))" class="flex flex-col gap-4">
+            <form 
+                @submit.prevent="form.post(route('organizations.update', {organization: organization.id}), {
+                    forceFormData: true,
+                })"
+                class="flex flex-col gap-4"
+            >
                 <div class="grid gap-4">
                     <Label>Nom de l'organisation</label>
                     <Input name="title" v-model="form.title" :aria-invalid="form.errors.title && form.errors.title?.length != 0"></Input>
@@ -63,7 +74,25 @@ const breadcrumbs: BreadcrumbItem[] = [
                     <InputError :message="form.errors.description" />
                 </div>
 
-                <AddressAutocomplete apiKey="ce6533ac4a3746bf8e801c669696457e" v-model="form.fullAddress"/>
+                <AddressAutocomplete 
+                    v-model:street="form.street"
+                    v-model:postcode="form.postcode"
+                    v-model:city="form.city"
+                    v-model:country="form.country"
+                    v-model:address="form.address"
+                />
+
+                <div class="grid gap-4">
+                    <Label>Logo</Label>
+                    <input
+                        type="file"
+                        name="logo"
+                        accept="image/*"
+                        @change="handleLogoChange"
+                        class="rounded border px-3 py-2 text-sm"
+                    />
+                        <InputError :message="form.errors.logo" />
+                </div>
 
                 <Button 
                     :disabled="form.processing"

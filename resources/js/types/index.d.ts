@@ -44,7 +44,8 @@ export interface Organization {
     street?: string;
     postcode?: string;
     city?: string;
-    country?: string
+    country?: string;
+    logo?: string
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;

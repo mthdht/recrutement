@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-4">
     <div class="relative">
-      <Label for="autocomplete">Adresse</Label>
+      <Label for="autocomplete" class="mb-4">Adresse</Label>
       <Input
         id="autocomplete"
         v-model="addressQuery"
@@ -24,22 +24,22 @@
       </ul>
     </div>
 
-    <div v-if="selected.address" class="grid grid-cols-2 gap-4">
+    <div v-if="address" class="grid grid-cols-2 gap-4">
       <div>
         <Label>Rue</Label>
-        <Input v-model="selected.street" />
+        <Input v-model="street" />
       </div>
       <div>
         <Label>Code postal</Label>
-        <Input v-model="selected.postcode" />
+        <Input v-model="postcode" />
       </div>
       <div>
         <Label>Ville</Label>
-        <Input v-model="selected.city" />
+        <Input v-model="city" />
       </div>
       <div>
         <Label>Pays</Label>
-        <Input v-model="selected.country" />
+        <Input v-model="country" />
       </div>
     </div>
   </div>
@@ -51,23 +51,16 @@ import axios from 'axios'
 import Input from '@/components/ui/input/Input.vue'
 import Label from '@/components/ui/label/Label.vue'
 
-const selected = defineModel({
-    default: {
-        street: '',
-        postcode: '',
-        city: '',
-        country: 'France', // L'API ne le renvoie pas, donc on force FR
-        address: '',
-    }
-})
-const addressQuery = ref(selected.value.address)
+const street = defineModel<string>('street')
+const postcode = defineModel<string>('postcode')
+const city = defineModel<string>('city')
+const country = defineModel<string>('country')
+const address = defineModel<string>('address')
+
+const addressQuery = ref(address)
 const suggestions = ref<any[]>([])
 const showSuggestions = ref(false)
 const isSelecting = ref(false)
-
-
-
-let debounce: number | null = null
 
 watch(addressQuery, async (value) => {
     if (isSelecting.value) return
@@ -98,14 +91,11 @@ function selectSuggestion(suggestion: any) {
   const props = suggestion.properties
 
   isSelecting.value = true
-
-  selected.value = {
-    street: [props.housenumber, props.street].filter(Boolean).join(' '),
-    postcode: props.postcode || '',
-    city: props.city || '',
-    country: 'France',
-    address: props.label,
-  }
+  street.value = props.street
+  postcode.value = props.postcode
+  city.value = props.city
+  country.value = 'France' // ou `result.country` si dispo
+  address.value = props.label
 
   addressQuery.value = props.label
   showSuggestions.value = false

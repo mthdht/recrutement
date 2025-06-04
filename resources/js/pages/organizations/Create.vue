@@ -10,18 +10,32 @@ import { Head, useForm } from '@inertiajs/vue3';
 
 import AddressAutocomplete from '@/components/AddressAutocomplete.vue'
 
-const form = useForm({
+const form = useForm<{
+    title: string
+    description: string
+    street: string
+    postcode: string
+    city: string
+    country: string
+    address: string
+    logo: File | null
+}>({
     title: '',
     description: '',
-    fullAddress: {
-        street: '',
-        postcode: '',
-        city: '',
-        country: 'France', // L'API ne le renvoie pas, donc on force FR
-        address: '',
-    }
+    street: '',
+    postcode: '',
+    city: '',
+    country: 'France', // L'API ne le renvoie pas, donc on force FR
+    address: '',
+    logo: null
 })
 
+function handleLogoChange(event: Event) {
+  const input = event.target as HTMLInputElement
+  if (input?.files?.[0]) {
+    form.logo = input.files[0]
+  }
+}
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -55,7 +69,25 @@ const breadcrumbs: BreadcrumbItem[] = [
                     <InputError :message="form.errors.description" />
                 </div>
 
-                <AddressAutocomplete apiKey="ce6533ac4a3746bf8e801c669696457e" v-model="form.fullAddress"/>
+                <AddressAutocomplete 
+                    v-model:street="form.street"
+                    v-model:postcode="form.postcode"
+                    v-model:city="form.city"
+                    v-model:country="form.country"
+                    v-model:address="form.address"
+                />
+
+                <div class="grid gap-4">
+                    <Label>Logo</Label>
+                    <input
+                        type="file"
+                        name="logo"
+                        accept="image/*"
+                        @change="handleLogoChange"
+                        class="rounded border px-3 py-2 text-sm"
+                    />
+                        <InputError :message="form.errors.logo" />
+                </div>
 
                 <Button 
                     :disabled="form.processing"
