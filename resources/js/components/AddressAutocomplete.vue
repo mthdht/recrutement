@@ -19,12 +19,12 @@
           @click="selectSuggestion(suggestion)"
           class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
         >
-            {{ suggestion.properties }}
+            {{ suggestion.properties.label }}
         </li>
       </ul>
     </div>
 
-    <!-- <div v-if="selected.formatted" class="grid grid-cols-2 gap-4">
+    <div v-if="selected.address" class="grid grid-cols-2 gap-4">
       <div>
         <Label>Rue</Label>
         <Input v-model="selected.street" />
@@ -41,7 +41,7 @@
         <Label>Pays</Label>
         <Input v-model="selected.country" />
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -51,20 +51,21 @@ import axios from 'axios'
 import Input from '@/components/ui/input/Input.vue'
 import Label from '@/components/ui/label/Label.vue'
 
-const addressQuery = ref('')
-const suggestions = ref<any[]>([])
-const showSuggestions = ref(false)
-const isSelecting = ref(false)
-
 const selected = defineModel({
     default: {
         street: '',
         postcode: '',
         city: '',
         country: 'France', // L'API ne le renvoie pas, donc on force FR
-        formatted: '',
+        address: '',
     }
 })
+const addressQuery = ref(selected.value.address)
+const suggestions = ref<any[]>([])
+const showSuggestions = ref(false)
+const isSelecting = ref(false)
+
+
 
 let debounce: number | null = null
 
@@ -103,7 +104,7 @@ function selectSuggestion(suggestion: any) {
     postcode: props.postcode || '',
     city: props.city || '',
     country: 'France',
-    formatted: props.label,
+    address: props.label,
   }
 
   addressQuery.value = props.label

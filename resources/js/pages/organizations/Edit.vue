@@ -8,14 +8,22 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem, type Organization } from '@/types';
 import { Head, useForm } from '@inertiajs/vue3';
 
+import AddressAutocomplete from '@/components/AddressAutocomplete.vue'
 
 const props = defineProps<{
     organization: Organization;
 }>();
 
 const form = useForm({
-  title: props.organization.title,
-  description: props.organization.description,
+    title: props.organization.title,
+    description: props.organization.description,
+    fullAddress: {
+        street: props.organization.street || '',
+        postcode: props.organization.postcode || '',
+        city: props.organization.city || '',
+        country: 'France', // L'API ne le renvoie pas, donc on force FR
+        address: props.organization.address || '',
+    }
 })
 
 
@@ -54,6 +62,8 @@ const breadcrumbs: BreadcrumbItem[] = [
                     <Textarea name="description" class="min-h-56" v-model="form.description" :aria-invalid="form.errors.description && form.errors.description?.length != 0"></Textarea>
                     <InputError :message="form.errors.description" />
                 </div>
+
+                <AddressAutocomplete apiKey="ce6533ac4a3746bf8e801c669696457e" v-model="form.fullAddress"/>
 
                 <Button 
                     :disabled="form.processing"

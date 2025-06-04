@@ -40,6 +40,11 @@ export interface Organization {
     id: number;
     title: string;
     description?: string;
+    address?: string;
+    street?: string;
+    postcode?: string;
+    city?: string;
+    country?: string
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;

@@ -18,7 +18,7 @@ const form = useForm({
         postcode: '',
         city: '',
         country: 'France', // L'API ne le renvoie pas, donc on force FR
-        formatted: '',
+        address: '',
     }
 })
 
@@ -42,7 +42,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="p-4">
-{{  form }}
             <form @submit.prevent="form.post(route('organizations.store'))" class="flex flex-col gap-4">
                 <div class="grid gap-4">
                     <Label>Nom de l'organisation</label>

@@ -31,7 +31,15 @@ class OrganizationController extends Controller
      */
     public function store(StoreOrganizationRequest $request)
     {   
-        $organization = Organization::create($request->all());
+        $organization = Organization::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'address' => $request->fullAddress['formatted'],
+            "street" => $request->fullAddress['street'],
+            "postcode" => $request->fullAddress['postcode'],
+            "city" => $request->fullAddress['city'],
+            "country" => "France"
+        ]);
 
         // Associer l'utilisateur à cette organisation
         Auth::user()->organizations()->attach($organization);

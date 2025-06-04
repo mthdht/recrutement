@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('organizations', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('slug')->unique();
             $table->string('description')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('website')->nullable();
             $table->string('address')->nullable();
-            $table->string('postal_code')->nullable();
+            $table->string('street')->nullable();
+            $table->string('postcode')->nullable();
             $table->string('city')->nullable();
             $table->string('country')->nullable();
             $table->string('logo_path')->nullable();

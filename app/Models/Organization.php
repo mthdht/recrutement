@@ -18,7 +18,12 @@ class Organization extends Model
      */
     protected $fillable = [
         'title',
-        'description'
+        'description',
+        'address',
+        'street',
+        'postcode',
+        'country',
+        'city'
     ];
 
     public function users() {
