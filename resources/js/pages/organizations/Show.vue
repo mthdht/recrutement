@@ -73,13 +73,17 @@ const form = useForm({
         </template>
 
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-            <div class="space-y-6">
-                <img :src="'/storage/' + organization.logo" alt="">
-                <h2 class="font-semibold">{{ organization.title }}</h2>
+            <div class="flex gap-4">
 
-                <p class="italic text-slate-700/80">{{ organization.description }}</p>
+                <img :src="'/storage/' + organization.logo" alt="" class="w-1/3">
+                <div class="space-y-6">
 
-                <p>{{ organization.address }}</p>
+                    <h2 class="font-semibold text-xl">{{ organization.title }}</h2>
+                    
+                    <p class="italic text-slate-700/80">{{ organization.description }}</p>
+                    
+                    <p>{{ organization.address }}</p>
+                </div>
             </div>
 
             <div class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 dark:border-sidebar-border md:min-h-min">

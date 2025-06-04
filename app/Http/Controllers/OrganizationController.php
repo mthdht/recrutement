@@ -78,7 +78,7 @@ class OrganizationController extends Controller
      */
     public function update(UpdateOrganizationRequest $request, Organization $organization)
     {
-        $path = '';
+        $path = $organization->logo;
         if ($request->hasFile('logo')) {
             $path = $request->file('logo')->storeAs('logos', $request->logo->getClientOriginalName(), 'public');
         }
