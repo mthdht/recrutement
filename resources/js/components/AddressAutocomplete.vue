@@ -19,10 +19,7 @@
           @click="selectSuggestion(suggestion)"
           class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
         >
-        <pre>
-
             {{ suggestion.properties }}
-        </pre>
         </li>
       </ul>
     </div>
@@ -57,48 +54,52 @@ import Label from '@/components/ui/label/Label.vue'
 const addressQuery = ref('')
 const suggestions = ref<any[]>([])
 const showSuggestions = ref(false)
+const isSelecting = ref(false)
 
-const selected = ref({
-  street: '',
-  postcode: '',
-  city: '',
-  country: 'France', // L'API ne le renvoie pas, donc on force FR
-  formatted: '',
+const selected = defineModel({
+    default: {
+        street: '',
+        postcode: '',
+        city: '',
+        country: 'France', // L'API ne le renvoie pas, donc on force FR
+        formatted: '',
+    }
 })
 
 let debounce: number | null = null
 
 watch(addressQuery, async (value) => {
-  if (debounce) clearTimeout(debounce)
+    if (isSelecting.value) return
 
-  if (!value || value.length < 3) {
-    suggestions.value = []
-    return
-  }
-
-  debounce = window.setTimeout(async () => {
-    try {
-      const res = await axios.get('https://api-adresse.data.gouv.fr/search/', {
-        params: {
-          q: value,
-          limit: 5,
-        },
-      })
-
-      suggestions.value = res.data.features || []
-      showSuggestions.value = true
-    } catch (e) {
-      console.error('Erreur recherche adresse:', e)
-      suggestions.value = []
+    if (!value || value.length < 3) {
+        suggestions.value = []
+        return
     }
-  }, 300)
+
+    try {
+        const res = await axios.get('https://api-adresse.data.gouv.fr/search/', {
+        params: {
+            q: value,
+            limit: 5,
+        },
+        })
+
+        suggestions.value = res.data.features || []
+        showSuggestions.value = true
+    } catch (e) {
+        console.error('Erreur recherche adresse:', e)
+        suggestions.value = []
+    }
+ 
 })
 
 function selectSuggestion(suggestion: any) {
   const props = suggestion.properties
 
+  isSelecting.value = true
+
   selected.value = {
-    street: [props.name, props.housenumber].filter(Boolean).join(' '),
+    street: [props.housenumber, props.street].filter(Boolean).join(' '),
     postcode: props.postcode || '',
     city: props.city || '',
     country: 'France',
@@ -107,5 +108,9 @@ function selectSuggestion(suggestion: any) {
 
   addressQuery.value = props.label
   showSuggestions.value = false
+
+  setTimeout(() => {
+    isSelecting.value = false
+  }, 200)
 }
 </script>

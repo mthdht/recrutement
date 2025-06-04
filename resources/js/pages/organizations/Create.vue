@@ -11,8 +11,15 @@ import { Head, useForm } from '@inertiajs/vue3';
 import AddressAutocomplete from '@/components/AddressAutocomplete.vue'
 
 const form = useForm({
-  title: '',
-  description: '',
+    title: '',
+    description: '',
+    fullAddress: {
+        street: '',
+        postcode: '',
+        city: '',
+        country: 'France', // L'API ne le renvoie pas, donc on force FR
+        formatted: '',
+    }
 })
 
 
@@ -49,7 +56,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                     <InputError :message="form.errors.description" />
                 </div>
 
-                <AddressAutocomplete apiKey="ce6533ac4a3746bf8e801c669696457e" />
+                <AddressAutocomplete apiKey="ce6533ac4a3746bf8e801c669696457e" v-model="form.fullAddress"/>
 
                 <Button 
                     :disabled="form.processing"
