@@ -8,6 +8,8 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem, type Organization } from '@/types';
 import { Head, useForm } from '@inertiajs/vue3';
 
+import AddressAutocomplete from '@/components/AddressAutocomplete.vue'
+
 const form = useForm({
   title: '',
   description: '',
@@ -46,6 +48,8 @@ const breadcrumbs: BreadcrumbItem[] = [
                     <Textarea name="description" class="min-h-56" v-model="form.description" :aria-invalid="form.errors.description && form.errors.description?.length != 0"></Textarea>
                     <InputError :message="form.errors.description" />
                 </div>
+
+                <AddressAutocomplete apiKey="ce6533ac4a3746bf8e801c669696457e" />
 
                 <Button 
                     :disabled="form.processing"
