@@ -82,9 +82,9 @@ const form = useForm({
 
                 <div class="space-y-6">
 
-                    <h2 class="font-semibold text-xl">{{ organization.title }}</h2>
+                    <h2 class="font-semibold text-2xl">{{ organization.title }}</h2>
                     
-                    <p class="italic text-slate-700/80">{{ organization.description }}</p>
+                    <p class="italic text-muted-foreground  text-center text-balance">{{ organization.description }}</p>
                     
                     <p>{{ organization.address }}</p>
                 </div>

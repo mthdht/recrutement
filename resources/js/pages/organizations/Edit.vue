@@ -60,6 +60,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                             v-model="form.logo"
                             v-model:error="form.errors.logo"
                             :logoUrl="props.organization.logo"
+                            :deleteLogoUrl="route('organizations.deleteLogo', {organization: organization.id})"
                         />
                     </div>
                     

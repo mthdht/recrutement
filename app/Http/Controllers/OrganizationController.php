@@ -34,7 +34,7 @@ class OrganizationController extends Controller
     {   
         $path= '';
         if ($request->hasFile('logo')) {
-            $path = $request->file('logo')->storeAs('logos', $request->logo->getClientOriginalName(), 'public');
+            $path = $request->file('logo')->store('logos', 'public');
         }
 
         $organization = Organization::create([
@@ -81,11 +81,8 @@ class OrganizationController extends Controller
     {
         $path = $organization->logo;
 
-        if ($organization->logo && Storage::disk('public')->exists($organization->logo)) {
-            Storage::disk('public')->delete($organization->logo);
-        }
-
         if ($request->hasFile('logo')) {
+            $organization->deleteLogoFile();
             $path = $request->file('logo')->store('logos', 'public');
         }
 
@@ -108,8 +105,19 @@ class OrganizationController extends Controller
      */
     public function destroy(Organization $organization)
     {
+        $organization->deleteLogoFile();
         $organization->delete();
 
         return redirect()->route('organizations.index')->with('success', 'Organisation supprimée avec succès');
+    }
+
+    public function deleteLogo(Organization $organization)
+    {
+        $organization->deleteLogoFile();
+        $organization->update([
+            'logo' => ''
+        ]);
+
+        return Inertia::location(route('organizations.edit', [$organization]));
     }
 }

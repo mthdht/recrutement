@@ -16,6 +16,7 @@ Route::get('dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::delete('organizations/{organization}/delete-logo', [OrganizationController::class, 'deleteLogo'])->name('organizations.deleteLogo');
     Route::resource('organizations', OrganizationController::class);
 });
 
