@@ -4,7 +4,7 @@ import { type BreadcrumbItem, type Organization } from '@/types';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import PlaceholderPattern from '../../components/PlaceholderPattern.vue';
 import Button from '@/components/ui/button/Button.vue';
-import { Trash } from 'lucide-vue-next';
+import { Image, Trash } from 'lucide-vue-next';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogFooter, DialogTrigger, DialogTitle } from '@/components/ui/dialog';
 
 
@@ -75,7 +75,11 @@ const form = useForm({
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
             <div class="flex gap-4">
 
-                <img :src="'/storage/' + organization.logo" alt="" class="w-1/3">
+                <div class="logo-wrapper w-1/4 border rounded-xl overflow-hidden">
+                    <img :src="'/storage/' + organization.logo" alt="" class="aspect-video object-cover" v-if="organization.logo">
+                    <Image class="placeholder size-full aspect-video" :absoluteStrokeWidth="true" v-else></Image>
+                </div>
+
                 <div class="space-y-6">
 
                     <h2 class="font-semibold text-xl">{{ organization.title }}</h2>
