@@ -7,9 +7,8 @@ import Textarea from '@/components/ui/textarea/Textarea.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem, type Organization } from '@/types';
 import { Head, useForm } from '@inertiajs/vue3';
-import { useTemplateRef, watch, ref } from 'vue';
 import AddressAutocomplete from '@/components/AddressAutocomplete.vue'
-import { ImagePlus } from 'lucide-vue-next';
+import FileImageInput from '@/components/FileImageInput.vue';
 
 const form = useForm<{
     title: string
@@ -30,24 +29,6 @@ const form = useForm<{
     address: '',
     logo: null
 })
-
-const input = useTemplateRef('input')
-const logoPreview = ref<string | null>(null);
-
-watch(() => form.logo, (file) => {
-  if (file instanceof File) {
-    logoPreview.value = URL.createObjectURL(file);
-  } else {
-    logoPreview.value = null;
-  }
-});
-
-function handleLogoChange(event: Event) {
-  const input = event.target as HTMLInputElement
-  if (input?.files?.[0]) {
-    form.logo = input.files[0]
-  }
-}
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -70,31 +51,12 @@ const breadcrumbs: BreadcrumbItem[] = [
         <div class="p-4">
             <form @submit.prevent="form.post(route('organizations.store'))" class="flex flex-col gap-4">
                 <div class="flex gap-4">
-                    <div class="logo-input-wrapper w-1/4">
-                        <div class="grid gap-4">
-                            <Label>Logo</Label>
-                            <div class="relative">
-                                <input
-                                    type="file"
-                                    name="logo"
-                                    accept="image/*"
-                                    @change="handleLogoChange"
-                                    class="rounded border px-3 py-2 text-sm hidden"
-                                    ref="input"
-                                />
-
-                                <div class="rounded-xl border cursor-pointer bg-slate-50 overflow-hidden" @click="input?.click()">
-                                    <img
-                                    v-if="logoPreview"
-                                    :src="logoPreview"
-                                    alt="Nouveau logo"
-                                    class="size-full aspect-video"
-                                    />
-                                    <ImagePlus class="placeholder size-full aspect-video" :absoluteStrokeWidth="true" v-else></ImagePlus>
-                                </div>
-                            </div>
-                            <InputError :message="form.errors.logo" />
-                        </div>
+                    <div class="logo-input-wrapper w-1/4 space-y-4">
+                        <Label>Logo</Label>
+                        <FileImageInput
+                            v-model="form.logo"
+                            v-model:error="form.errors.logo"
+                        />
                     </div>
 
                     <div class="text-input-wrapper grow space-y-4">

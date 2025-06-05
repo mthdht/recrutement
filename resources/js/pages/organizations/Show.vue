@@ -28,7 +28,6 @@ const form = useForm({
   description: '',
 })
 
-
 </script>
 
 <template>
@@ -43,16 +42,15 @@ const form = useForm({
 
              <Dialog>
                 <DialogTrigger as-child>
-                    <Button variant="destructive" class="font-semibold" title="delete organisation">
+                    <Button variant="destructive" class="font-semibold cursor-pointer" title="delete organisation">
                         <Trash class="stroke-3"></Trash>
                     </Button>
                 </DialogTrigger>
                 <DialogContent>
                         <DialogHeader class="space-y-3">
-                            <DialogTitle>Are you sure you want to delete your account?</DialogTitle>
+                            <DialogTitle>Etes vous sur de vouloir supprimer cette organisation?</DialogTitle>
                             <DialogDescription>
-                                Once your account is deleted, all of its resources and data will also be permanently deleted. Please enter your
-                                password to confirm you would like to permanently delete your account.
+                                Une fois effacées, toutes les informations et ressources seront definitivement supprimées !
                             </DialogDescription>
                         </DialogHeader>
 
@@ -62,11 +60,13 @@ const form = useForm({
                                 <Button variant="secondary"> Cancel </Button>
                             </DialogClose>
 
-                            <Button variant="destructive" :disabled="form.processing">
-                                <Link :href="route('organizations.destroy', {organization: props.organization.id})" method="delete">
-                                    <Trash class="stroke-3"></Trash>
-                                </Link>
-                            </Button>
+                            <DialogClose as-child>
+                                <Button asChild variant="destructive" :disabled="form.processing" class="cursor-pointer">
+                                    <Link :href="route('organizations.destroy', {organization: props.organization.id})" method="delete">
+                                        <Trash class="stroke-3"></Trash>
+                                    </Link>
+                                </Button>
+                            </DialogClose>
                         </DialogFooter>
                 </DialogContent>
             </Dialog>
