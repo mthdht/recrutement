@@ -6,6 +6,7 @@ use App\Models\Organization;
 use App\Http\Requests\StoreOrganizationRequest;
 use App\Http\Requests\UpdateOrganizationRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class OrganizationController extends Controller
@@ -79,8 +80,13 @@ class OrganizationController extends Controller
     public function update(UpdateOrganizationRequest $request, Organization $organization)
     {
         $path = $organization->logo;
+
+        if ($organization->logo && Storage::disk('public')->exists($organization->logo)) {
+            Storage::disk('public')->delete($organization->logo);
+        }
+
         if ($request->hasFile('logo')) {
-            $path = $request->file('logo')->storeAs('logos', $request->logo->getClientOriginalName(), 'public');
+            $path = $request->file('logo')->store('logos', 'public');
         }
 
         $organization->update([
