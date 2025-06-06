@@ -10,7 +10,6 @@ import FileImageInput from '@/components/FileImageInput.vue';
 
 import { type BreadcrumbItem, type Organization } from '@/types';
 import { Head, useForm } from '@inertiajs/vue3';
-import { ImagePlus } from 'lucide-vue-next';
 
 const props = defineProps<{
     organization: Organization;
@@ -18,7 +17,7 @@ const props = defineProps<{
 
 const form = useForm({
     _method: 'put',
-    title: props.organization.title || '',
+    name: props.organization.name || '',
     description: props.organization.description || '',
     street: props.organization.street || '',
     postcode: props.organization.postcode || '',
@@ -34,7 +33,7 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/organizations',
     },
     {
-        title: props.organization.title,
+        title: props.organization.name,
         href: route('organizations.show', {organization: props.organization.id}),
     },
     {
@@ -68,8 +67,8 @@ const breadcrumbs: BreadcrumbItem[] = [
                     <div class="text-input-wrapper grow space-y-4">
                         <div class="grid gap-4">
                             <Label>Nom de l'organisation</label>
-                            <Input name="title" v-model="form.title" :aria-invalid="form.errors.title && form.errors.title?.length != 0"></Input>
-                            <InputError :message="form.errors.title" />
+                            <Input name="name" v-model="form.name" :aria-invalid="form.errors.name && form.errors.name?.length != 0"></Input>
+                            <InputError :message="form.errors.name" />
                         </div>
 
                         <div class="grid gap-4">

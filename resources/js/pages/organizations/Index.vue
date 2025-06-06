@@ -15,7 +15,7 @@ const search = ref('')
 
 const filteredOrganizations = computed(() => {
   return props.organizations.filter(org =>
-    org.title.toLowerCase().includes(search.value.toLowerCase())
+    org.name.toLowerCase().includes(search.value.toLowerCase())
   )
 })
 
@@ -61,7 +61,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                     <div class="p-2 relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border hover:bg-slate-50 flex flex-col justify-center items-center gap-4">
                         <img :src="'/storage/' + organization.logo" alt="" class="size-1/3 aspect-video object-cover" v-if="organization.logo">
 
-                        <h3 class="font-semibold text-2xl">{{ organization.title }}</h3>
+                        <h3 class="font-semibold text-2xl">{{ organization.name }}</h3>
                         <p class="text-muted-foreground text-sm text-center text-balance">{{ organization.description }}</p>
                         <p class="text-xs">{{  organization.address }}</p>
                     </div>

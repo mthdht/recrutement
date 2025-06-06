@@ -23,7 +23,7 @@ class StoreOrganizationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'logo' => ['nullable', 'image']
         ];
@@ -37,7 +37,7 @@ class StoreOrganizationRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'title.required' => 'A title is required',
+            'name.required' => 'A title is required',
         ];
     }
 }

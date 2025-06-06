@@ -38,14 +38,15 @@ export interface User {
 
 export interface Organization {
     id: number;
-    title: string;
+    name: string;
     description?: string;
     address?: string;
     street?: string;
     postcode?: string;
     city?: string;
     country?: string;
-    logo?: string
+    logo?: string;
+    phone?: string;
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;

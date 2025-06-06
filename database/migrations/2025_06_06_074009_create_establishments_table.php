@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('organizations', function (Blueprint $table) {
+        Schema::create('establishments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('organization_id')->constrained()->cascadeOnDelete();
             $table->string('name');
-            $table->string('description')->nullable();
-            $table->string('email')->nullable();
-            $table->string('phone')->nullable();
+            $table->text('description')->nullable();
             $table->string('website')->nullable();
             $table->string('address')->nullable();
             $table->string('street')->nullable();
@@ -24,6 +23,7 @@ return new class extends Migration
             $table->string('city')->nullable();
             $table->string('country')->nullable();
             $table->string('logo')->nullable();
+            $table->string('phone')->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('organizations');
+        Schema::dropIfExists('establishments');
     }
 };

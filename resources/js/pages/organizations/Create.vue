@@ -11,7 +11,7 @@ import AddressAutocomplete from '@/components/AddressAutocomplete.vue'
 import FileImageInput from '@/components/FileImageInput.vue';
 
 const form = useForm<{
-    title: string
+    name: string
     description: string
     street: string
     postcode: string
@@ -20,7 +20,7 @@ const form = useForm<{
     address: string
     logo: File | null
 }>({
-    title: '',
+    name: '',
     description: '',
     street: '',
     postcode: '',
@@ -62,8 +62,8 @@ const breadcrumbs: BreadcrumbItem[] = [
                     <div class="text-input-wrapper grow space-y-4">
                         <div class="grid gap-4">
                             <Label>Nom de l'organisation</label>
-                            <Input name="title" v-model="form.title" :aria-invalid="form.errors.title && form.errors.title?.length != 0"></Input>
-                            <InputError :message="form.errors.title" />
+                            <Input name="name" v-model="form.name" :aria-invalid="form.errors.name && form.errors.name?.length != 0"></Input>
+                            <InputError :message="form.errors.name" />
                         </div>
 
                         <div class="grid gap-4">

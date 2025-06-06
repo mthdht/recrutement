@@ -38,7 +38,7 @@ class OrganizationController extends Controller
         }
 
         $organization = Organization::create([
-            'title' => $request->title,
+            'name' => $request->name,
             'description' => $request->description,
             'address' => $request->address,
             "street" => $request->street,
@@ -87,7 +87,7 @@ class OrganizationController extends Controller
         }
 
         $organization->update([
-            'title' => $request->title,
+            'name' => $request->name,
             'description' => $request->description,
             'address' => $request->address,
             "street" => $request->street,

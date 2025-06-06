@@ -18,13 +18,14 @@ class Organization extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'title',
+        'name',
         'description',
         'address',
         'street',
         'postcode',
         'country',
         'city',
+        'phone',
         'logo'
     ];
 
