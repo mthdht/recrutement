@@ -28,23 +28,44 @@ class EstablishmentController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('establishments/Create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEstablishmentRequest $request)
+    public function store(StoreEstablishmentRequest $request, Organization $organization)
     {
-        //
+        $path= '';
+        if ($request->hasFile('logo')) {
+            $path = $request->file('logo')->store('logos', 'public');
+        }
+
+        $establishment = $organization->establishments()->create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'address' => $request->address,
+            "street" => $request->street,
+            "postcode" => $request->postcode,
+            "city" => $request->city,
+            "country" => "France",
+            "logo" => $path,
+            "phone" => $request->phone,
+            "website" => $request->website
+        ]);
+
+        return redirect()->route('organizations.establishments.show', [$organization, $establishment])->with('success', 'Organisation créée avec succès');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Establishment $establishment)
+    public function show(Organization $organization, Establishment $establishment)
     {
-        //
+        return Inertia::render('establishments/Show', [
+            'organization' => $organization,
+            'establishment' => $establishment
+        ]);
     }
 
     /**
