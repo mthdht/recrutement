@@ -74,7 +74,6 @@ const form = useForm({
 
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
             <div class="flex gap-4">
-
                 <div class="logo-wrapper w-1/4 border rounded-xl overflow-hidden">
                     <img :src="'/storage/' + organization.logo" alt="" class="aspect-video object-cover" v-if="organization.logo">
                     <Image class="placeholder size-full aspect-video" :absoluteStrokeWidth="true" v-else></Image>

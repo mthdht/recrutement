@@ -9,4 +9,28 @@ class Establishment extends Model
 {
     /** @use HasFactory<\Database\Factories\EstablishmentFactory> */
     use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'name',
+        'description',
+        'address',
+        'street',
+        'postcode',
+        'country',
+        'city',
+        'phone',
+        'logo',
+        'wesbsite',
+        'organization_id'
+    ];
+
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class);
+    }
 }

@@ -12,7 +12,7 @@ class Organization extends Model
     /** @use HasFactory<\Database\Factories\OrganizationFactory> */
     use HasFactory;
 
-     /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
@@ -26,7 +26,8 @@ class Organization extends Model
         'country',
         'city',
         'phone',
-        'logo'
+        'logo',
+        'website'
     ];
 
     public function users() {

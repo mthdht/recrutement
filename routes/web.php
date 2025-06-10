@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EstablishmentController;
 use App\Http\Controllers\OrganizationController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,6 +19,7 @@ Route::get('dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::delete('organizations/{organization}/delete-logo', [OrganizationController::class, 'deleteLogo'])->name('organizations.deleteLogo');
     Route::resource('organizations', OrganizationController::class);
+    Route::resource('organizations.establishments', EstablishmentController::class);
 });
 
 require __DIR__.'/settings.php';

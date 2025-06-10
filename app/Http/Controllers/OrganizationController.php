@@ -45,7 +45,9 @@ class OrganizationController extends Controller
             "postcode" => $request->postcode,
             "city" => $request->city,
             "country" => "France",
-            "logo" => $path
+            "logo" => $path,
+            "phone" => $request->phone,
+            "website" => $request->website
         ]);
 
         // Associer l'utilisateur à cette organisation
@@ -94,7 +96,9 @@ class OrganizationController extends Controller
             "postcode" => $request->postcode,
             "city" => $request->city,
             "country" => "France",
-            "logo" => $path
+            "logo" => $path,
+            "phone" => $request->phone,
+            "website" => $request->website
         ]);
 
         return redirect()->route('organizations.show', [$organization])->with('success', 'Organisation modifier avec succès');

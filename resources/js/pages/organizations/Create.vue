@@ -10,16 +10,7 @@ import { Head, useForm } from '@inertiajs/vue3';
 import AddressAutocomplete from '@/components/AddressAutocomplete.vue'
 import FileImageInput from '@/components/FileImageInput.vue';
 
-const form = useForm<{
-    name: string
-    description: string
-    street: string
-    postcode: string
-    city: string
-    country: string
-    address: string
-    logo: File | null
-}>({
+const form = useForm({
     name: '',
     description: '',
     street: '',
@@ -27,7 +18,9 @@ const form = useForm<{
     city: '',
     country: 'France', // L'API ne le renvoie pas, donc on force FR
     address: '',
-    logo: null
+    logo: null,
+    phone: '',
+    website: ''
 })
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -50,8 +43,8 @@ const breadcrumbs: BreadcrumbItem[] = [
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="p-4">
             <form @submit.prevent="form.post(route('organizations.store'))" class="flex flex-col gap-4">
-                <div class="flex gap-4">
-                    <div class="logo-input-wrapper w-1/4 space-y-4">
+                <div class="flex flex-wrap gap-4 container">
+                    <div class="logo-input-wrapper w-full lg:w-1/4 space-y-4">
                         <Label>Logo</Label>
                         <FileImageInput
                             v-model="form.logo"
@@ -59,16 +52,36 @@ const breadcrumbs: BreadcrumbItem[] = [
                         />
                     </div>
 
-                    <div class="text-input-wrapper grow space-y-4">
-                        <div class="grid gap-4">
-                            <Label>Nom de l'organisation</label>
+                    <div class="text-input-wrapper grow space-y-6">
+                        <div class="grid gap-3">
+                            <Label class="">Nom de l'organisation <span class="text-red-500">*</span></label>
                             <Input name="name" v-model="form.name" :aria-invalid="form.errors.name && form.errors.name?.length != 0"></Input>
                             <InputError :message="form.errors.name" />
                         </div>
 
-                        <div class="grid gap-4">
+                        <div class="grid gap-3">
+                            <Label>Site web</label>
+                            <Input 
+                                v-model="form.website" 
+                                :aria-invalid="form.errors.website && form.errors.website?.length != 0"
+                                placeholder="www.monsite.com"
+                            ></Input>
+                            <InputError :message="form.errors.website" />
+                        </div>
+
+                        <div class="grid gap-3">
+                            <Label>Téléphone</label>
+                            <Input 
+                                v-model="form.phone" 
+                                :aria-invalid="form.errors.phone && form.errors.phone?.length != 0"
+                                placeholder="07 08 09 01 02"
+                            ></Input>
+                            <InputError :message="form.errors.phone" />
+                        </div>
+
+                        <div class="grid gap-3">
                             <Label>Desription</label>
-                            <Textarea name="description" class="min-h-56" v-model="form.description" :aria-invalid="form.errors.description && form.errors.description?.length != 0"></Textarea>
+                            <Textarea name="description" class="min-h-40" v-model="form.description" :aria-invalid="form.errors.description && form.errors.description?.length != 0"></Textarea>
                             <InputError :message="form.errors.description" />
                         </div>
 

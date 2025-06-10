@@ -47,6 +47,7 @@ export interface Organization {
     country?: string;
     logo?: string;
     phone?: string;
+    website?: string;
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;

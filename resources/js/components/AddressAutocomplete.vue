@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-4">
     <div class="relative">
-      <Label for="autocomplete" class="mb-4">Adresse</Label>
+      <Label for="autocomplete" class="mb-3">Adresse</Label>
       <Input
         id="autocomplete"
         v-model="addressQuery"
@@ -24,24 +24,24 @@
       </ul>
     </div>
 
-    <div v-if="address" class="grid grid-cols-2 gap-4">
-      <div>
+    <!-- <div v-if="address" class="grid grid-cols-2 gap-3">
+      <div class="space-y-2">
         <Label>Rue</Label>
         <Input v-model="street" />
       </div>
-      <div>
+      <div class="space-y-2">
         <Label>Code postal</Label>
         <Input v-model="postcode" />
       </div>
-      <div>
+      <div class="space-y-2">
         <Label>Ville</Label>
         <Input v-model="city" />
       </div>
-      <div>
+      <div class="space-y-2">
         <Label>Pays</Label>
         <Input v-model="country" />
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
