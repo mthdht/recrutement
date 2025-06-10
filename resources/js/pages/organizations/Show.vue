@@ -3,9 +3,10 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem, type Organization } from '@/types';
 import { Head, Link } from '@inertiajs/vue3';
 import Button from '@/components/ui/button/Button.vue';
-import { Globe, House, Image, Phone, Trash } from 'lucide-vue-next';
+import { Globe, House, Image, Phone, Search, Trash } from 'lucide-vue-next';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogFooter, DialogTrigger, DialogTitle } from '@/components/ui/dialog';
 import { computed, ref } from 'vue';
+import { Input } from '@/components/ui/input';
 
 
 const props = defineProps<{
@@ -38,6 +39,11 @@ const filteredEstablishments = computed(() => {
     <AppLayout :breadcrumbs="breadcrumbs">
         <template #action>
             <!-- content for the header slot -->
+             <div class="organization-search hidden md:block relative">
+                <Input placeholder="Rechercher une organisation..." class="pl-8 lg:min-w-96" v-model="search"></Input>
+                <Search class="absolute top-2 left-2 size-5 text-muted-foreground"></Search>
+            </div>
+
              <Button class="bg-yellow-500 hover:bg-yellow-400 font-semibold" asChild>
                 <Link :href="route('organizations.edit', {organization: props.organization.id})">Edit</Link>
              </Button>
