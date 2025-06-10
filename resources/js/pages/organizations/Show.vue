@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem, type Organization } from '@/types';
-import { Head, Link, useForm } from '@inertiajs/vue3';
-import PlaceholderPattern from '../../components/PlaceholderPattern.vue';
+import { Head, Link } from '@inertiajs/vue3';
 import Button from '@/components/ui/button/Button.vue';
-import { Image, Trash } from 'lucide-vue-next';
+import { Globe, House, Image, Phone, Trash } from 'lucide-vue-next';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogFooter, DialogTrigger, DialogTitle } from '@/components/ui/dialog';
 
 
@@ -22,12 +21,6 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: route('organizations.show', {organization: props.organization.id}),
     },
 ];
-
-const form = useForm({
-  title: '',
-  description: '',
-})
-
 </script>
 
 <template>
@@ -61,7 +54,7 @@ const form = useForm({
                             </DialogClose>
 
                             <DialogClose as-child>
-                                <Button asChild variant="destructive" :disabled="form.processing" class="cursor-pointer">
+                                <Button asChild variant="destructive" class="cursor-pointer">
                                     <Link :href="route('organizations.destroy', {organization: props.organization.id})" method="delete">
                                         <Trash class="stroke-3"></Trash>
                                     </Link>
@@ -83,9 +76,22 @@ const form = useForm({
 
                     <h2 class="font-semibold text-2xl">{{ organization.name }}</h2>
                     
-                    <p class="italic text-muted-foreground  text-balance">{{ organization.description }}</p>
+                    <p class="italic text-muted-foreground  text-balance" v-if="organization.description">{{ organization.description }}</p>
                     
-                    <p>{{ organization.address }}</p>
+                    <p class="flex items-center gap-2" v-if="organization.address">
+                        <House></House>
+                        {{ organization.address }}
+                    </p>
+
+                    <p class="flex items-center gap-2" v-if="organization.phone">
+                        <Phone></Phone>
+                        {{ organization.phone }}
+                    </p>
+
+                    <p class="flex items-center gap-2" v-if="organization.website">
+                        <Globe></Globe>
+                        {{ organization.website }}
+                    </p>
                 </div>
             </div>
 

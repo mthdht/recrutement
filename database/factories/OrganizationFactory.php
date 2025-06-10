@@ -19,6 +19,8 @@ class OrganizationFactory extends Factory
         return [
             'name' => fake()->company(),
             'description' => fake()->optional()->sentence(),
+            'phone' => fake()->optional()->phoneNumber(),
+            'website' => fake()->optional()->domainName()
         ];
     }
 }
