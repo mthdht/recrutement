@@ -5,11 +5,14 @@ import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
 import Textarea from '@/components/ui/textarea/Textarea.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { type BreadcrumbItem, type Organization } from '@/types';
+import { type BreadcrumbItem, type Establishment, type Organization } from '@/types';
 import { Head, useForm } from '@inertiajs/vue3';
 import AddressAutocomplete from '@/components/AddressAutocomplete.vue'
 import FileImageInput from '@/components/FileImageInput.vue';
 
+const props = defineProps<{
+    organization: Organization;
+}>();
 
 const form = useForm({
     name: '',
@@ -30,8 +33,12 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/organizations',
     },
     {
-        title: 'Créer',
-        href: '/organizations/create',
+        title: props.organization.name,
+        href: route('organizations.show', {organization: props.organization.id}),
+    },
+    {
+        title: 'Créer un établissement',
+        href: route('organizations.establishments.create', {organization: props.organization.id}),
     },
 ];
 
@@ -39,11 +46,11 @@ const breadcrumbs: BreadcrumbItem[] = [
 </script>
 
 <template>
-    <Head title="Créer une organisation" />
+    <Head title="Créer un établissement" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="p-4">
-            <form @submit.prevent="form.post(route('organizations.store'))" class="flex flex-col gap-4">
+            <form @submit.prevent="form.post(route('organizations.establishments.store', {organization: props.organization.id}))" class="flex flex-col gap-4">
                 <div class="flex flex-wrap gap-4 container">
                     <div class="logo-input-wrapper w-full lg:w-1/4 space-y-4">
                         <Label>Logo</Label>

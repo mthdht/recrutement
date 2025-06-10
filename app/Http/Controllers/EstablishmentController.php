@@ -26,15 +26,17 @@ class EstablishmentController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Organization $organization)
     {
-        return Inertia::render('establishments/Create');
+        return Inertia::render('establishments/Create', [
+            'organization' => $organization,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEstablishmentRequest $request, Organization $organization)
+    public function store(StoreEstablishmentRequest $request, Organization $organization, Establishment $establishment)
     {
         $path= '';
         if ($request->hasFile('logo')) {
@@ -54,7 +56,7 @@ class EstablishmentController extends Controller
             "website" => $request->website
         ]);
 
-        return redirect()->route('organizations.establishments.show', [$organization, $establishment])->with('success', 'Organisation créée avec succès');
+        return redirect()->route('organizations.establishments.show', [$organization, $establishment])->with('success', 'Etablissement crée avec succès');
     }
 
     /**
@@ -71,24 +73,60 @@ class EstablishmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Establishment $establishment)
+    public function edit(Organization $organization, Establishment $establishment)
     {
-        //
+        return Inertia::render('establishments/Edit', [
+            'organization' => $organization,
+            'establishment' => $establishment
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEstablishmentRequest $request, Establishment $establishment)
+    public function update(UpdateEstablishmentRequest $request, Organization $organization, Establishment $establishment)
     {
-        //
+        $path = $establishment->logo;
+
+        if ($request->hasFile('logo')) {
+            $organization->deleteLogoFile();
+            $path = $request->file('logo')->store('logos', 'public');
+        }
+
+        $establishment->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'address' => $request->address,
+            "street" => $request->street,
+            "postcode" => $request->postcode,
+            "city" => $request->city,
+            "country" => "France",
+            "logo" => $path,
+            "phone" => $request->phone,
+            "website" => $request->website
+        ]);
+
+        return redirect()->route('organizations.establishments.show', [$organization, $establishment])->with('success', 'Organisation modifier avec succès');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Establishment $establishment)
+    public function destroy(Organization $organization, Establishment $establishment)
     {
-        //
+        $establishment->deleteLogoFile();
+        $establishment->delete();
+
+        return redirect()->route('organizations.show', [$organization])->with('success', 'Organisation supprimée avec succès');
+    }
+
+    public function deleteLogo(Organization $organization)
+    {
+        $organization->deleteLogoFile();
+        $organization->update([
+            'logo' => ''
+        ]);
+
+        return Inertia::location(route('organizations.edit', [$organization]));
     }
 }

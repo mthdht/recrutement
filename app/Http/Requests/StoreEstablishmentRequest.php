@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreEstablishmentRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreEstablishmentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::user()->role == 'recruiter';
     }
 
     /**
@@ -22,7 +23,20 @@ class StoreEstablishmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:255'],
+            'logo' => ['nullable', 'image']
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'A title is required',
         ];
     }
 }

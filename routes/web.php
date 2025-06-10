@@ -18,6 +18,7 @@ Route::get('dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::delete('organizations/{organization}/delete-logo', [OrganizationController::class, 'deleteLogo'])->name('organizations.deleteLogo');
+    Route::delete('organizations/{organization}/establishments/{establishment}/delete-logo', [EstablishmentController::class, 'deleteLogo'])->name('organizations.establishments.deleteLogo');
     Route::resource('organizations', OrganizationController::class);
     Route::resource('organizations.establishments', EstablishmentController::class);
 });

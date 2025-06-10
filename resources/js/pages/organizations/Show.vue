@@ -3,7 +3,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem, type Organization } from '@/types';
 import { Head, Link } from '@inertiajs/vue3';
 import Button from '@/components/ui/button/Button.vue';
-import { Globe, House, Image, Phone, Search, Trash } from 'lucide-vue-next';
+import { Globe, House, Image, Phone, Plus, Search, Trash } from 'lucide-vue-next';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogFooter, DialogTrigger, DialogTitle } from '@/components/ui/dialog';
 import { computed, ref } from 'vue';
 import { Input } from '@/components/ui/input';
@@ -111,7 +111,14 @@ const filteredEstablishments = computed(() => {
 
             <div class="relative min-h-[100vh] flex-1 md:min-h-min  space-y-6">
                 <div class="space-y-1">
-                    <h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white"> Mes établissements</h1>
+                    <h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white flex justify-between"> 
+                        Mes établissements
+                        <Button asChild class="bg-emerald-500 hover:bg-emerald-400">
+                            <Link :href="route('organizations.establishments.create', {organization: organization.id})">
+                                Ajouter un établissement
+                            </Link>
+                        </Button>
+                    </h1>
                     <p class="text-muted-foreground text-sm">Liste des établissements enregistrés dans votre organisation.</p>
                 </div>
 
@@ -130,6 +137,8 @@ const filteredEstablishments = computed(() => {
                         </div>
                     </Link>
 
+                    
+
                     <div class="no-establishments h-56 border rounded-xl flex flex-col items-center justify-center gap-8 col-span-full p-8" v-if="!organization.establishments.length">
                         <h3 class="font-semibold">OOps!! Il semble qu'il n'y ai pas d'établissements de créer.</h3>
 
@@ -139,6 +148,8 @@ const filteredEstablishments = computed(() => {
                     </div>
                     
                 </div>
+
+
             </div>
         </div>
     </AppLayout>
