@@ -5,15 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Establishment;
 use App\Http\Requests\StoreEstablishmentRequest;
 use App\Http\Requests\UpdateEstablishmentRequest;
+use App\Models\Organization;
+use Inertia\Inertia;
 
 class EstablishmentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Organization $organization)
     {
-        //
+        $establishments = $organization->establishments()->get();
+
+        return Inertia::render('Establishments/Index', [
+            'organization' => $organization,
+            'establishments' => $establishments
+        ]);
     }
 
     /**

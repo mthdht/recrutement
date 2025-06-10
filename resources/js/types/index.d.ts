@@ -48,6 +48,21 @@ export interface Organization {
     logo?: string;
     phone?: string;
     website?: string;
+    establishments: Establishment[]
+}
+
+export interface Establishment {
+    id: number;
+    name: string;
+    description?: string;
+    address?: string;
+    street?: string;
+    postcode?: string;
+    city?: string;
+    country?: string;
+    logo?: string;
+    phone?: string;
+    website?: string;
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;

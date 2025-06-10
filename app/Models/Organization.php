@@ -34,6 +34,11 @@ class Organization extends Model
         return $this->belongsToMany(User::class);
     }
 
+    public function establishments()
+    {
+        return $this->hasMany(Establishment::class);
+    }
+
     public function deleteLogoFile(): void
     {
         if ($this->logo && Storage::disk('public')->exists($this->logo)) {

@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Establishment;
+use App\Models\Organization;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,7 +19,8 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $matt = User::factory()
-            ->hasOrganizations(3)
+            ->has(Organization::factory(4)
+                ->has(Establishment::factory(6)))
             ->create([
                 'name' => 'mth',
                 'email' => 'mthdht@gmail.com',

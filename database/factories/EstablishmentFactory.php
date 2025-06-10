@@ -17,7 +17,11 @@ class EstablishmentFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->company(),
+            'description' => fake()->optional()->sentence(),
+            'address' => fake()->optional()->address(),
+            'phone' => fake()->optional()->phoneNumber(),
+            'website' => fake()->optional()->domainName()
         ];
     }
 }

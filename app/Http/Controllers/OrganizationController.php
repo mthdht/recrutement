@@ -63,6 +63,7 @@ class OrganizationController extends Controller
     {
         return Inertia::render('organizations/Show', [
             'organization' => $organization,
+            'establishments' => $organization->establishments
         ]);
     }
 
