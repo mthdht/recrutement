@@ -45,7 +45,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
     {
         title: 'Modifier',
-        href: route('organizations.edit', {organization: props.organization.id}),
+        href: route('organizations.establishments.edit', {organization: props.organization.id, establishment: props.establishment.id}),
     },
 ];
 

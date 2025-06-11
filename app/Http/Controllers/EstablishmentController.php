@@ -6,6 +6,7 @@ use App\Models\Establishment;
 use App\Http\Requests\StoreEstablishmentRequest;
 use App\Http\Requests\UpdateEstablishmentRequest;
 use App\Models\Organization;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 class EstablishmentController extends Controller
@@ -28,6 +29,8 @@ class EstablishmentController extends Controller
      */
     public function create(Organization $organization)
     {
+        Gate::authorize('create', [Establishment::class, $organization]);
+        
         return Inertia::render('establishments/Create', [
             'organization' => $organization,
         ]);
@@ -36,8 +39,10 @@ class EstablishmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEstablishmentRequest $request, Organization $organization, Establishment $establishment)
+    public function store(StoreEstablishmentRequest $request, Organization $organization)
     {
+        Gate::authorize('create', [Establishment::class, $organization]);
+
         $path= '';
         if ($request->hasFile('logo')) {
             $path = $request->file('logo')->store('logos', 'public');
@@ -64,6 +69,8 @@ class EstablishmentController extends Controller
      */
     public function show(Organization $organization, Establishment $establishment)
     {
+        Gate::authorize('act', $establishment);
+
         return Inertia::render('establishments/Show', [
             'organization' => $organization,
             'establishment' => $establishment
@@ -75,6 +82,8 @@ class EstablishmentController extends Controller
      */
     public function edit(Organization $organization, Establishment $establishment)
     {
+        Gate::authorize('act', $establishment);
+
         return Inertia::render('establishments/Edit', [
             'organization' => $organization,
             'establishment' => $establishment
@@ -86,6 +95,8 @@ class EstablishmentController extends Controller
      */
     public function update(UpdateEstablishmentRequest $request, Organization $organization, Establishment $establishment)
     {
+        Gate::authorize('act', $establishment);
+
         $path = $establishment->logo;
 
         if ($request->hasFile('logo')) {
@@ -114,19 +125,23 @@ class EstablishmentController extends Controller
      */
     public function destroy(Organization $organization, Establishment $establishment)
     {
+        Gate::authorize('act', $establishment);
+
         $establishment->deleteLogoFile();
         $establishment->delete();
 
         return redirect()->route('organizations.show', [$organization])->with('success', 'Organisation supprimée avec succès');
     }
 
-    public function deleteLogo(Organization $organization)
+    public function deleteLogo(Organization $organization, Establishment $establishment)
     {
-        $organization->deleteLogoFile();
-        $organization->update([
+        Gate::authorize('act', $establishment);
+
+        $establishment->deleteLogoFile();
+        $establishment->update([
             'logo' => ''
         ]);
 
-        return Inertia::location(route('organizations.edit', [$organization]));
+        return Inertia::location(route('organizations.establishments.edit', [$organization, $establishment]));
     }
 }

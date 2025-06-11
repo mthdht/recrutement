@@ -3,11 +3,17 @@
 namespace App\Policies;
 
 use App\Models\Establishment;
+use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
 class EstablishmentPolicy
 {
+
+    public function act(User $user, Establishment $establishment): bool
+    {
+        return $user->organizations->contains($establishment->organization);
+    }
     /**
      * Determine whether the user can view any models.
      */
@@ -27,9 +33,9 @@ class EstablishmentPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user, Organization $organization): bool
     {
-        return false;
+        return $user->organizations->contains($organization);
     }
 
     /**
