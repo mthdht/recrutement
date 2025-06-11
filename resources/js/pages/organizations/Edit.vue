@@ -1,42 +1,46 @@
 <script setup lang="ts">
-import AppLayout from '@/layouts/AppLayout.vue'
-import { Head, useForm } from '@inertiajs/vue3'
-import OrganizationForm from '@/components/OrganizationForm.vue'
-import type { BreadcrumbItem, Organization } from '@/types'
+import AppLayout from '@/layouts/AppLayout.vue';
+import EstablishmentForm from '@/components/EstablishmentForm.vue';
+import { Head, useForm } from '@inertiajs/vue3';
+import { type BreadcrumbItem, type Organization, type Establishment } from '@/types';
 
 const props = defineProps<{
   organization: Organization;
-}>()
+  establishment: Establishment;
+}>();
 
 const form = useForm({
   _method: 'put',
-  name: props.organization.name || '',
-  description: props.organization.description || '',
-  street: props.organization.street || '',
-  postcode: props.organization.postcode || '',
-  city: props.organization.city || '',
+  name: props.establishment.name || '',
+  description: props.establishment.description || '',
+  street: props.establishment.street || '',
+  postcode: props.establishment.postcode || '',
+  city: props.establishment.city || '',
   country: 'France',
-  address: props.organization.address || '',
-  logo: null,
-  phone: props.organization.phone || '',
-  website: props.organization.website || ''
-})
+  address: props.establishment.address || '',
+  logo: null as File | null,
+  phone: props.establishment.phone || '',
+  website: props.establishment.website || ''
+});
 
 const breadcrumbs: BreadcrumbItem[] = [
   { title: 'Organisations', href: '/organizations' },
   { title: props.organization.name, href: route('organizations.show', { organization: props.organization.id }) },
-  { title: 'Modifier', href: route('organizations.edit', { organization: props.organization.id }) },
-]
+  { title: props.establishment.name, href: route('organizations.establishments.show', { organization: props.organization.id, establishment: props.establishment.id }) },
+  { title: 'Modifier', href: route('organizations.establishments.edit', { organization: props.organization.id, establishment: props.establishment.id }) },
+];
 </script>
 
 <template>
-  <Head title="Modifier une organisation" />
+  <Head title="Modifier un établissement" />
   <AppLayout :breadcrumbs="breadcrumbs">
     <div class="p-4">
-      <OrganizationForm
+      <EstablishmentForm
         :form="form"
         mode="edit"
-        @submit="() => form.post(route('organizations.update', { organization: props.organization.id }))"
+        :logo-url="props.establishment.logo"
+        :delete-logo-url="route('organizations.establishments.deleteLogo', { organization: props.organization.id, establishment: props.establishment.id })"
+        @submit="form.post(route('organizations.establishments.update', { organization: props.organization.id, establishment: props.establishment.id }))"
       />
     </div>
   </AppLayout>
