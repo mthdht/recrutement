@@ -85,4 +85,34 @@ it('allows an associated user to delete an organization', function () {
     expect(Organization::find($organization->id))->toBeNull();
 });
 
+it('forbids a non-associated user from viewing an organization', function () {
+    $user = User::factory()->create(['role' => 'recruiter']);
+    $organization = Organization::factory()->create();
+
+    $this->actingAs($user)
+        ->get("/organizations/{$organization->id}")
+        ->assertForbidden();
+});
+
+it('forbids a non-associated user from updating an organization', function () {
+    $user = User::factory()->create(['role' => 'recruiter']);
+    $organization = Organization::factory()->create();
+
+    $this->actingAs($user)
+        ->put("/organizations/{$organization->id}", [
+            'name' => 'Hacked Name',
+        ])
+        ->assertForbidden();
+});
+
+it('forbids a non-associated user from deleting an organization', function () {
+    $user = User::factory()->create(['role' => 'recruiter']);
+    $organization = Organization::factory()->create();
+
+    $this->actingAs($user)
+        ->delete("/organizations/{$organization->id}")
+        ->assertForbidden();
+});
+
+
 

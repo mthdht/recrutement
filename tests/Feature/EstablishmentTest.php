@@ -90,3 +90,34 @@ it('allows an associated user to delete an establishment of an organization', fu
     $this->assertDatabaseMissing('establishments', ['id' => $establishment->id]);
 });
 
+it('forbids a non-associated user from viewing an establishment', function () {
+    $user = User::factory()->create(['role' => 'recruiter']);
+    $organization = Organization::factory()->create();
+    $establishment = \App\Models\Establishment::factory()->create(['organization_id' => $organization->id]);
+
+    $this->actingAs($user)
+        ->get("/organizations/{$organization->id}/establishments/{$establishment->id}")
+        ->assertForbidden();
+});
+
+it('forbids a non-associated user from updating an establishment', function () {
+    $user = User::factory()->create(['role' => 'recruiter']);
+    $organization = Organization::factory()->create();
+    $establishment = \App\Models\Establishment::factory()->create(['organization_id' => $organization->id]);
+
+    $this->actingAs($user)
+        ->put("/organizations/{$organization->id}/establishments/{$establishment->id}", [
+            'name' => 'Should not update',
+        ])
+        ->assertForbidden();
+});
+
+it('forbids a non-associated user from deleting an establishment', function () {
+    $user = User::factory()->create(['role' => 'recruiter']);
+    $organization = Organization::factory()->create();
+    $establishment = \App\Models\Establishment::factory()->create(['organization_id' => $organization->id]);
+
+    $this->actingAs($user)
+        ->delete("/organizations/{$organization->id}/establishments/{$establishment->id}")
+        ->assertForbidden();
+});
