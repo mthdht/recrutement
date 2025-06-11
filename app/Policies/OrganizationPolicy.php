@@ -8,6 +8,10 @@ use Illuminate\Auth\Access\Response;
 
 class OrganizationPolicy
 {
+    public function act(User $user, Organization $organization) 
+    {
+        return $user->organizations->contains($organization);
+    }
     /**
      * Determine whether the user can view any models.
      */
@@ -21,7 +25,7 @@ class OrganizationPolicy
      */
     public function view(User $user, Organization $organization): bool
     {
-        return false;
+        return $organization->user == $user;
     }
 
     /**
@@ -29,7 +33,7 @@ class OrganizationPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->role == 'recruiter';
     }
 
     /**
@@ -37,7 +41,7 @@ class OrganizationPolicy
      */
     public function update(User $user, Organization $organization): bool
     {
-        return false;
+        return $user->organizations->contains($organization);
     }
 
     /**
@@ -45,7 +49,7 @@ class OrganizationPolicy
      */
     public function delete(User $user, Organization $organization): bool
     {
-        return false;
+       return $user->organizations->contains($organization);
     }
 
     /**
@@ -53,7 +57,7 @@ class OrganizationPolicy
      */
     public function restore(User $user, Organization $organization): bool
     {
-        return false;
+        return $user->organizations->contains($organization);
     }
 
     /**
@@ -61,6 +65,6 @@ class OrganizationPolicy
      */
     public function forceDelete(User $user, Organization $organization): bool
     {
-        return false;
+        return $user->organizations->contains($organization);
     }
 }

@@ -26,6 +26,15 @@ class DatabaseSeeder extends Seeder
                 'email' => 'mthdht@gmail.com',
             ]);
 
+        $matt2 = User::factory()
+            ->has(Organization::factory(4)
+                ->has(Establishment::factory(6)))
+            ->create([
+                'name' => 'mth2',
+                'email' => 'mthdht2@gmail.com',
+            ]);
+
+
         // $max = User::factory()->create([
         //     'name' => 'max',
         //     'email' => 'max@example.com',

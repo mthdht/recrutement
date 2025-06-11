@@ -59,11 +59,11 @@ const breadcrumbs: BreadcrumbItem[] = [
                     :key="organization.id"
                 >
                     <div class="p-2 relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border hover:bg-slate-50 flex flex-col justify-center items-center gap-4">
-                        <img :src="'/storage/' + organization.logo" alt="" class="size-1/3 aspect-video object-cover" v-if="organization.logo">
+                        <img :src="'/storage/' + organization.logo" alt="" class="size-1/3 aspect-video object-cover md:hidden lg:block" v-if="organization.logo">
 
-                        <h3 class="font-semibold text-2xl">{{ organization.name }}</h3>
-                        <p class="text-muted-foreground text-sm text-center text-balance">{{ organization.description }}</p>
-                        <p class="text-xs">{{  organization.address }}</p>
+                        <h3 class="font-semibold text-2xl text-center">{{ organization.name }}</h3>
+                        <p class="text-muted-foreground text-sm text-center text-balance md:hidden lg:block">{{ organization.description }}</p>
+                        <p class="text-xs md:hidden lg:block">{{  organization.address }}</p>
                     </div>
                 </Link>
 

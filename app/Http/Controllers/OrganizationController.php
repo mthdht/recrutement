@@ -6,6 +6,7 @@ use App\Models\Organization;
 use App\Http\Requests\StoreOrganizationRequest;
 use App\Http\Requests\UpdateOrganizationRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -24,6 +25,8 @@ class OrganizationController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Organization::class);
+
         return Inertia::render('organizations/Create');
     }
 
@@ -32,6 +35,8 @@ class OrganizationController extends Controller
      */
     public function store(StoreOrganizationRequest $request)
     {   
+        Gate::authorize('create', Organization::class);
+
         $path= '';
         if ($request->hasFile('logo')) {
             $path = $request->file('logo')->store('logos', 'public');
@@ -61,6 +66,8 @@ class OrganizationController extends Controller
      */
     public function show(Organization $organization)
     {
+        Gate::authorize('act', $organization);
+
         return Inertia::render('organizations/Show', [
             'organization' => $organization,
             'establishments' => $organization->establishments
@@ -72,6 +79,8 @@ class OrganizationController extends Controller
      */
     public function edit(Organization $organization)
     {
+        Gate::authorize('act', $organization);
+
         return Inertia::render('organizations/Edit', [
             'organization' => $organization,
         ]);
@@ -82,6 +91,8 @@ class OrganizationController extends Controller
      */
     public function update(UpdateOrganizationRequest $request, Organization $organization)
     {
+        Gate::authorize('act', $organization);
+
         $path = $organization->logo;
 
         if ($request->hasFile('logo')) {
@@ -110,6 +121,8 @@ class OrganizationController extends Controller
      */
     public function destroy(Organization $organization)
     {
+        Gate::authorize('act', $organization);
+        
         $organization->deleteLogoFile();
         $organization->delete();
 

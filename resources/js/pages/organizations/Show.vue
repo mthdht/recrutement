@@ -113,7 +113,7 @@ const filteredEstablishments = computed(() => {
                 <div class="space-y-1">
                     <h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white flex justify-between"> 
                         Mes établissements
-                        <Button asChild class="bg-emerald-500 hover:bg-emerald-400">
+                        <Button asChild class="bg-emerald-500 hover:bg-emerald-400" v-if="organization.establishments.length">
                             <Link :href="route('organizations.establishments.create', {organization: organization.id})">
                                 Ajouter un établissement
                             </Link>
@@ -131,7 +131,7 @@ const filteredEstablishments = computed(() => {
                         <div class="p-2 relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border hover:bg-slate-50 flex flex-col justify-center items-center gap-4">
                             <img :src="'/storage/' + establishment.logo" alt="" class="size-1/3 aspect-video object-cover" v-if="establishment.logo">
 
-                            <h3 class="font-semibold text-2xl">{{ establishment.name }}</h3>
+                            <h3 class="font-semibold text-2xl text-center">{{ establishment.name }}</h3>
                             <p class="text-muted-foreground text-sm text-center text-balance">{{ establishment.description }}</p>
                             <p class="text-xs">{{  establishment.address }}</p>
                         </div>
@@ -140,10 +140,10 @@ const filteredEstablishments = computed(() => {
                     
 
                     <div class="no-establishments h-56 border rounded-xl flex flex-col items-center justify-center gap-8 col-span-full p-8" v-if="!organization.establishments.length">
-                        <h3 class="font-semibold">OOps!! Il semble qu'il n'y ai pas d'établissements de créer.</h3>
+                        <h3 class="font-semibold">Oops!! Il semble qu'il n'y ai pas d'établissements de créer.</h3>
 
                         <Button class="bg-emerald-500 hover:bg-emerald-400 font-semibold" asChild>
-                            <Link :href="route('establishments.create')">Ajouter un établissement</Link>
+                            <Link :href="route('organizations.establishments.create', {organization: props.organization.id})">Ajouter un établissement</Link>
                         </Button>
                     </div>
                     

@@ -62,7 +62,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
                     <div class="text-input-wrapper grow space-y-6">
                         <div class="grid gap-3">
-                            <Label class="">Nom de l'organisation <span class="text-red-500">*</span></label>
+                            <Label class="">Nom de l'établissement <span class="text-red-500">*</span></label>
                             <Input name="name" v-model="form.name" :aria-invalid="form.errors.name && form.errors.name?.length != 0"></Input>
                             <InputError :message="form.errors.name" />
                         </div>
