@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('contract_type');
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->string('working_hours');
+            $table->string('working_hours')->nullable();
             $table->string('salary')->nullable();
             $table->string('status')->default('draft'); // ex: 'draft', 'published', 'archived'
             $table->timestamp('published_at')->nullable();

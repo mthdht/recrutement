@@ -63,6 +63,21 @@ export interface Establishment {
     logo?: string;
     phone?: string;
     website?: string;
+    jobOffers?: JobOffer[]
+}
+
+export interface JobOffer {
+    id: number;
+    title: string;
+    description: string;
+    contract_type: string;
+    start_date?: string; 
+    end_date?: string; 
+    working_hours?: string; 
+    salary?: string; // 
+    status: 'draft' | 'published' | 'archived'; 
+    published_at: string | null; 
+    establishment_id: number; 
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;
