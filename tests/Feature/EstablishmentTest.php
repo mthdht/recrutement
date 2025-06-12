@@ -3,9 +3,6 @@
 use App\Models\Organization;
 use App\Models\User;
 
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
-
 it('allows an associated user to create an establishment for an organization', function () {
     $user = User::factory()->create(['role' => 'recruiter']);
     $organization = Organization::factory()->create();
