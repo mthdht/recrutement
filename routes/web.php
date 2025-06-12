@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EstablishmentController;
+use App\Http\Controllers\JobOfferController;
 use App\Http\Controllers\OrganizationController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -21,6 +22,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('organizations/{organization}/establishments/{establishment}/delete-logo', [EstablishmentController::class, 'deleteLogo'])->name('organizations.establishments.deleteLogo');
     Route::resource('organizations', OrganizationController::class);
     Route::resource('organizations.establishments', EstablishmentController::class);
+    Route::resource('organizations.establishments.jobs', JobOfferController::class)->parameters([
+        'jobs' => 'jobOffer'
+    ]);
 });
 
 require __DIR__.'/settings.php';

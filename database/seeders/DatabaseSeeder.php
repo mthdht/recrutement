@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Establishment;
+use App\Models\JobOffer;
 use App\Models\Organization;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -28,7 +29,8 @@ class DatabaseSeeder extends Seeder
 
         $matt2 = User::factory()
             ->has(Organization::factory(4)
-                ->has(Establishment::factory(6)))
+                ->has(Establishment::factory(6)
+                    ->has(JobOffer::factory(5))))
             ->create([
                 'name' => 'mth2',
                 'email' => 'mthdht2@gmail.com',

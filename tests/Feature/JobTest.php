@@ -1,10 +1,11 @@
 <?php
 
 use App\Models\Establishment;
+use App\Models\JobOffer;
 use App\Models\Organization;
 use App\Models\User;
 
-it('allows an associated user to create a job offer for an establishment', function () {
+it('allows an associated user to create a JobOffer offer for an establishment', function () {
     // Arrange
     $user = User::factory()->create(['role' => 'recruiter']);
     $organization = Organization::factory()->create();
@@ -28,7 +29,7 @@ it('allows an associated user to create a job offer for an establishment', funct
         ->post("/organizations/{$organization->id}/establishments/{$establishment->id}/jobs", $data)
         ->assertRedirect();
 
-    $this->assertDatabaseHas('jobs', [
+    $this->assertDatabaseHas('Job_offers', [
         'title' => 'Educateur spécialisé',
         'establishment_id' => $establishment->id,
     ]);
@@ -40,16 +41,16 @@ it('allows an associated user to view a job offer of their establishment', funct
     $establishment = Establishment::factory()->create(['organization_id' => $organization->id]);
     $user->organizations()->attach($organization);
 
-    $offer = Job::factory()->create([
+    $jobOffer = JobOffer::factory()->create([
         'establishment_id' => $establishment->id,
     ]);
 
     $user->refresh();
 
     $this->actingAs($user)
-        ->get("/organizations/{$organization->id}/establishments/{$establishment->id}/job-offers/{$offer->id}")
+        ->get("/organizations/{$organization->id}/establishments/{$establishment->id}/jobs/{$jobOffer->id}")
         ->assertOk()
-        ->assertSee($offer->title);
+        ->assertSee($jobOffer->title);
 });
 
 it('allows an associated user to update a job offer', function () {
@@ -58,17 +59,25 @@ it('allows an associated user to update a job offer', function () {
     $establishment = Establishment::factory()->create(['organization_id' => $organization->id]);
     $user->organizations()->attach($organization);
 
-    $offer = Job::factory()->create(['establishment_id' => $establishment->id]);
+    $jobOffer = JobOffer::factory()->create(['establishment_id' => $establishment->id]);
 
     $user->refresh();
 
     $this->actingAs($user)
-        ->put("/organizations/{$organization->id}/establishments/{$establishment->id}/jobs/{$offer->id}", [
+        ->put("/organizations/{$organization->id}/establishments/{$establishment->id}/jobs/{$jobOffer->id}", [
             'title' => 'Updated title',
+            'description' => 'Updated desc',
+            'contract_type' => 'CDD',
+            'start_date' => '2025-07-01',
+            'end_date' => '2025-12-31',
+            'working_hours' => '35h',
+            'salary' => '3000',
+            'status' => 'draft',
+
         ])
         ->assertRedirect();
 
-    $this->assertDatabaseHas('jobs', ['title' => 'Updated title']);
+    $this->assertDatabaseHas('job_offers', ['title' => 'Updated title']);
 });
 
 it('allows an associated user to delete a job offer', function () {
@@ -77,15 +86,15 @@ it('allows an associated user to delete a job offer', function () {
     $establishment = Establishment::factory()->create(['organization_id' => $organization->id]);
     $user->organizations()->attach($organization);
 
-    $offer = Job::factory()->create(['establishment_id' => $establishment->id]);
+    $jobOffer = JobOffer::factory()->create(['establishment_id' => $establishment->id]);
 
     $user->refresh();
 
     $this->actingAs($user)
-        ->delete("/organizations/{$organization->id}/establishments/{$establishment->id}/jobs/{$offer->id}")
+        ->delete("/organizations/{$organization->id}/establishments/{$establishment->id}/jobs/{$jobOffer->id}")
         ->assertRedirect();
 
-    $this->assertDatabaseMissing('jobs', ['id' => $offer->id]);
+    $this->assertDatabaseMissing('jobs', ['id' => $jobOffer->id]);
 });
 
 it('forbids a non-associated user to create a job', function () {
@@ -113,12 +122,12 @@ it('forbids a non-associated user to view a job', function () {
     $user = User::factory()->create(['role' => 'recruiter']);
     $organization = Organization::factory()->create();
     $establishment = Establishment::factory()->create(['organization_id' => $organization->id]);
-    $job = Job::factory()->create(['establishment_id' => $establishment->id]);
+    $jobOffer = JobOffer::factory()->create(['establishment_id' => $establishment->id]);
 
     $user->refresh();
 
     $this->actingAs($user)
-        ->get("/organizations/{$organization->id}/establishments/{$establishment->id}/jobs/{$job->id}")
+        ->get("/organizations/{$organization->id}/establishments/{$establishment->id}/jobs/{$jobOffer->id}")
         ->assertForbidden();
 });
 
@@ -126,13 +135,20 @@ it('forbids a non-associated user to update a job', function () {
     $user = User::factory()->create(['role' => 'recruiter']);
     $organization = Organization::factory()->create();
     $establishment = Establishment::factory()->create(['organization_id' => $organization->id]);
-    $job = Job::factory()->create(['establishment_id' => $establishment->id]);
+    $jobOffer = JobOffer::factory()->create(['establishment_id' => $establishment->id]);
 
     $user->refresh();
 
     $this->actingAs($user)
-        ->put("/organizations/{$organization->id}/establishments/{$establishment->id}/jobs/{$job->id}", [
+        ->put("/organizations/{$organization->id}/establishments/{$establishment->id}/jobs/{$jobOffer->id}", [
             'title' => 'Tentative non autorisée',
+            'description' => 'Should not be saved',
+            'contract_type' => 'CDD',
+            'start_date' => '2025-07-01',
+            'end_date' => '2025-12-31',
+            'working_hours' => '35h',
+            'salary' => '2500',
+            'status' => 'draft',
         ])
         ->assertForbidden();
 });
@@ -141,11 +157,11 @@ it('forbids a non-associated user to delete a job', function () {
     $user = User::factory()->create(['role' => 'recruiter']);
     $organization = Organization::factory()->create();
     $establishment = Establishment::factory()->create(['organization_id' => $organization->id]);
-    $job = Job::factory()->create(['establishment_id' => $establishment->id]);
+    $jobOffer = JobOffer::factory()->create(['establishment_id' => $establishment->id]);
 
     $user->refresh();
 
     $this->actingAs($user)
-        ->delete("/organizations/{$organization->id}/establishments/{$establishment->id}/jobs/{$job->id}")
+        ->delete("/organizations/{$organization->id}/establishments/{$establishment->id}/jobs/{$jobOffer->id}")
         ->assertForbidden();
 });

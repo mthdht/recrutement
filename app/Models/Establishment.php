@@ -35,6 +35,10 @@ class Establishment extends Model
         return $this->belongsTo(Organization::class);
     }
 
+    public function jobOffers() {
+        return $this->hasMany(JobOffer::class);
+    }
+
     public function deleteLogoFile(): void
     {
         if ($this->logo && Storage::disk('public')->exists($this->logo)) {
