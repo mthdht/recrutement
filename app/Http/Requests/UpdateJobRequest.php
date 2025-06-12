@@ -35,4 +35,18 @@ class UpdateJobRequest extends FormRequest
         ];
     }
 
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'A title is required',
+            'description.required' => 'A description is required',
+            'contract_type.required' => 'A contract type is required',
+        ];
+    }
+
 }

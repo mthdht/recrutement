@@ -28,10 +28,23 @@ class StoreJobRequest extends FormRequest
             'contract_type' => ['required', 'string'],
             'start_date' => ['nullable', 'date'],
             'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
-            'working_hours' => ['required', 'string'],
             'salary' => ['nullable', 'string'],
             'status' => ['required', 'string', Rule::in(['draft', 'published', 'archived'])],
             'published_at' => ['nullable', 'date'],
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'A title is required',
+            'description.required' => 'A description is required',
+            'contract_type.required' => 'A contract type is required',
         ];
     }
 

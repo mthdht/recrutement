@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
 
         $matt = User::factory()
             ->has(Organization::factory(4)
-                ->has(Establishment::factory(6)))
+                ->has(Establishment::factory(6)
+                    ->has(JobOffer::factory(5))))
             ->create([
                 'name' => 'mth',
                 'email' => 'mthdht@gmail.com',

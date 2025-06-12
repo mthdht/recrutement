@@ -25,9 +25,10 @@ class JobOfferController extends Controller
      */
     public function create(Organization $organization, Establishment $establishment)
     {
+        
         Gate::authorize('create', [JobOffer::class, $establishment]);
 
-        return Inertia::render('Jobs/Create', [
+        return Inertia::render('jobs/Create', [
             'organization' => $organization,
             'establishment' => $establishment,
         ]);
@@ -59,7 +60,7 @@ class JobOfferController extends Controller
     {
         Gate::authorize('act', $jobOffer);
 
-        return Inertia::render('Jobs/Show', [
+        return Inertia::render('jobs/Show', [
             'organization' => $organization,
             'establishment' => $establishment,
             'jobOffer' => $jobOffer,

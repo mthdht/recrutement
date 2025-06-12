@@ -6,6 +6,7 @@ import Button from '@/components/ui/button/Button.vue';
 import { Globe, House, Image, Phone, Search, Trash } from 'lucide-vue-next';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogFooter, DialogTrigger, DialogTitle } from '@/components/ui/dialog';
 import { computed, ref } from 'vue';
+import { Input } from '@/components/ui/input';
 
 
 const props = defineProps<{
@@ -42,8 +43,12 @@ const filteredJobOffers = computed(() => {
     <Head :title="establishment.name" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
+        
         <template #action>
-            <!-- content for the header slot -->
+             <div class="organization-search hidden md:block relative">
+                <Input placeholder="Rechercher une offre d'emploi..." class="pl-8 lg:min-w-96" v-model="search"></Input>
+                <Search class="absolute top-2 left-2 size-5 text-muted-foreground"></Search>
+            </div>
 
              <Button class="bg-yellow-500 hover:bg-yellow-400 font-semibold" asChild>
                 <Link :href="route('organizations.establishments.edit', {organization: props.organization.id, establishment: props.establishment.id})">Edit</Link>
@@ -115,12 +120,12 @@ const filteredJobOffers = computed(() => {
                     <h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white flex justify-between"> 
                         Offres d'emploi
                         <Button asChild class="bg-emerald-500 hover:bg-emerald-400" v-if="jobOffers?.length">
-                            <Link :href="route('organizations.establishments.jobs.create', {organization: organization.id, Establishment: establishment.id})">
+                            <Link :href="route('organizations.establishments.jobs.create', {organization: organization.id, establishment: establishment.id})">
                                 Ajouter une offre d'emploi
                             </Link>
                         </Button>
                     </h1>
-                    <p class="text-muted-foreground text-sm">Liste des offres d'emploi enregistrés dans votre établissement.</p>
+                    <p class="text-muted-foreground text-sm">Liste des offres d'emploi enregistrées dans votre établissement.</p>
                 </div>
 
                 <div class="grid auto-rows-min gap-4 md:grid-cols-3 xl:grid-cols-4">
@@ -131,7 +136,7 @@ const filteredJobOffers = computed(() => {
                     >
                         <div class="p-2 relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border hover:bg-slate-50 flex flex-col justify-center items-center gap-4">
                             <h3 class="font-semibold text-2xl text-center">{{ jobOffer.title }}</h3>
-                            <p class="text-muted-foreground text-sm text-center text-balance">{{ jobOffer.description }}</p>
+                            <p class="text-muted-foreground text-sm text-center text-balance truncate">{{ jobOffer.description }}</p>
                             <p class="text-xs">{{  jobOffer.contract_type }}</p>
                         </div>
                     </Link>

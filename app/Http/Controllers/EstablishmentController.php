@@ -73,7 +73,8 @@ class EstablishmentController extends Controller
 
         return Inertia::render('establishments/Show', [
             'organization' => $organization,
-            'establishment' => $establishment
+            'establishment' => $establishment,
+            'jobOffers' => $establishment->jobOffers
         ]);
     }
 
