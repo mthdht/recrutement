@@ -130,7 +130,7 @@ const filteredJobOffers = computed(() => {
 
                 <div class="grid auto-rows-min gap-4 md:grid-cols-3 xl:grid-cols-4">
                     <Link 
-                        :href="route('organizations.establishments.show', {organization: organization.id, establishment: establishment.id})" 
+                        :href="route('organizations.establishments.jobs.show', {organization: organization.id, establishment: establishment.id, jobOffer: jobOffer.id})" 
                         v-for="jobOffer in filteredJobOffers"
                         :key="jobOffer.id"
                     >

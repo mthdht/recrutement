@@ -35,7 +35,8 @@ class Establishment extends Model
         return $this->belongsTo(Organization::class);
     }
 
-    public function jobOffers() {
+    public function jobOffers() 
+    {
         return $this->hasMany(JobOffer::class);
     }
 

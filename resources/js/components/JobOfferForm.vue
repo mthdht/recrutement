@@ -4,6 +4,8 @@ import Label from '@/components/ui/label/Label.vue'
 import Textarea from '@/components/ui/textarea/Textarea.vue'
 import InputError from '@/components/InputError.vue'
 import Button from '@/components/ui/button/Button.vue'
+import { MdEditor, config } from 'md-editor-v3';
+import 'md-editor-v3/lib/style.css';
 
 const props = defineProps<{
   form: any,
@@ -25,17 +27,34 @@ const props = defineProps<{
 
             <div class="grid gap-3">
                 <Label for="description">Description <span class="text-red-500">*</span></Label>
-                <Textarea id="description" v-model="form.description" class="min-h-40" :aria-invalid="!!form.errors.description" />
+                <MdEditor v-model="form.description" language="us_US" :preview="false"/>
                 <InputError v-if="form.errors.description" :message="form.errors.description" />
             </div>
 
-            <div class="grid gap-3">
-                <Label for="contract_type">Type de contrat <span class="text-red-500">*</span></Label>
-                <Input id="contract_type" v-model="form.contract_type" :aria-invalid="!!form.errors.contract_type" />
-                <InputError v-if="form.errors.contract_type" :message="form.errors.contract_type" />
-            </div>
-
             <div class="flex gap-8">
+                <div class="grid gap-3">
+                    <Label for="status">Type de contrat <span class="text-red-500">*</span></Label>
+                    <select
+                        id="contract_type"
+                        v-model="form.contract_type"
+                        :aria-invalid="!!form.errors.contract_type"
+                        class="border rounded-md p-2"
+                    >
+                        <option value="" disabled selected class="italic text-sm">Choisir un type de contrat</option>
+                        <option value="draft">CDI</option>
+                        <option value="published">CDD</option>
+                        <option value="archived">Interim</option>
+                        <option value="archived">Alternance</option>
+                    </select>
+                    <InputError v-if="form.errors.contract_type" :message="form.errors.contract_type" />
+                </div>
+
+                <div class="grid gap-3">
+                    <Label for="salary">Salaire</Label>
+                    <Input id="salary" v-model="form.salary" :aria-invalid="!!form.errors.salary" />
+                    <InputError v-if="form.errors.salary" :message="form.errors.salary" />
+                </div>
+            
                 <div class="grid gap-3">
                     <Label for="start_date">Date de début</Label>
                     <Input id="start_date" type="date" v-model="form.start_date" :aria-invalid="!!form.errors.start_date" />
@@ -49,11 +68,7 @@ const props = defineProps<{
                 </div>
             </div>
 
-            <div class="grid gap-3">
-                <Label for="salary">Salaire</Label>
-                <Input id="salary" v-model="form.salary" :aria-invalid="!!form.errors.salary" />
-                <InputError v-if="form.errors.salary" :message="form.errors.salary" />
-            </div>
+            
 
             <div class="grid gap-3">
                 <Label for="status">Statut <span class="text-red-500">*</span></Label>
