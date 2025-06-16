@@ -6,6 +6,7 @@ import InputError from '@/components/InputError.vue'
 import Button from '@/components/ui/button/Button.vue'
 import 'md-editor-v3/lib/style.css';
 import TipTap from './TipTap.vue'
+import { Euro } from 'lucide-vue-next'
 
 const props = defineProps<{
   form: any,
@@ -51,7 +52,12 @@ const props = defineProps<{
 
                 <div class="grid gap-3">
                     <Label for="salary">Salaire</Label>
-                    <Input id="salary" v-model="form.salary" :aria-invalid="!!form.errors.salary" />
+                    <div class="input-wrapper relative ">
+                        <Input id="salary" v-model="form.salary" :aria-invalid="!!form.errors.salary" class="pr-10"/>
+                        <div class="absolute right-0 bg-slate-100 h-9 w-9 top-0 rounded flex items-center justify-center border">
+                            <Euro class="size-5"></Euro>
+                        </div>
+                    </div>
                     <InputError v-if="form.errors.salary" :message="form.errors.salary" />
                 </div>
             

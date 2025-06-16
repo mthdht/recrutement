@@ -1,6 +1,6 @@
 <template>
-  <div class="wrapper shadow border divide-y" v-if="editor">
-    <div class="actions p-2 flex">
+  <div class="wrapper shadow border divide-y rounded" v-if="editor">
+    <div class="actions p-1.5 flex">
       <div class="undeo-redo flex">
         <button
           @click="editor?.chain().focus().undo().run()"
@@ -27,7 +27,7 @@
 
       <div class="w-0 border mx-2"></div>
 
-      <div class="flex">
+      <div class="flex gap-1">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button 
@@ -85,7 +85,7 @@
           <DropdownMenuTrigger asChild>
             <button 
               class="size-8 flex items-center gap-0.5 p-1 rounded-lg hover:bg-slate-200 disabled:opacity-30 cursor-pointer hover:text-slate-900"
-              :class="{ 'bg-slate-100': editor?.isActive('heading') }"
+              :class="{ 'bg-slate-100': editor?.isActive('') }"
               type="button"
             >
               <List class="size-5" :absolute-stroke-width="true"></List>
@@ -111,7 +111,7 @@
                 <button
                   @click="editor?.chain().focus().toggleOrderedList().run()"
                   class="p-1.5 rounded hover:bg-slate-200 disabled:opacity-30 cursor-pointer flex items-center gap-2 w-full"
-                  :class="{ 'bg-slate-100': editor?.isActive('ordoredList') }"
+                  :class="{ 'bg-slate-100': editor?.isActive('orderedList') }"
                   aria-label="ordered list"
                   type="button"
                 >
