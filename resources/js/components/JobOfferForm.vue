@@ -4,8 +4,8 @@ import Label from '@/components/ui/label/Label.vue'
 import Textarea from '@/components/ui/textarea/Textarea.vue'
 import InputError from '@/components/InputError.vue'
 import Button from '@/components/ui/button/Button.vue'
-import { MdEditor, config } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
+import TipTap from './TipTap.vue'
 
 const props = defineProps<{
   form: any,
@@ -27,7 +27,7 @@ const props = defineProps<{
 
             <div class="grid gap-3">
                 <Label for="description">Description <span class="text-red-500">*</span></Label>
-                <MdEditor v-model="form.description" language="us_US" :preview="false"/>
+                <TipTap v-model="form.description"></TipTap>
                 <InputError v-if="form.errors.description" :message="form.errors.description" />
             </div>
 

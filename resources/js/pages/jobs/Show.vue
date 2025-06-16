@@ -26,7 +26,11 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
     {
         title: props.establishment.name,
-        href: '',
+        href: route('organizations.establishments.show', {organization: props.organization.id, establishment: props.establishment.id}),
+    },
+    {
+        title: props.jobOffer.title,
+        href: route('organizations.establishments.jobs.show', {organization: props.organization.id, establishment: props.establishment.id, jobOffer: props.jobOffer.id}),
     },
 ];
 
