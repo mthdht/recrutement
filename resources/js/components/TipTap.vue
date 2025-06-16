@@ -145,13 +145,21 @@
 <script setup>
 import { useEditor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
+import TaskItem from '@tiptap/extension-task-item'
+import TaskList from '@tiptap/extension-task-list'
 
 import { Undo2, Redo2, ChevronDown, List, ListOrdered, ListTodo } from 'lucide-vue-next'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from './ui/dropdown-menu'
 
 const editor = useEditor({
   content: "<p>I'm running Tiptap with Vue.js. 🎉</p>",
-  extensions: [StarterKit],
+  extensions: [
+    StarterKit, 
+    TaskList, 
+    TaskItem.configure({
+          nested: true,
+    })
+  ],
 })
 </script>
 
@@ -174,7 +182,15 @@ const editor = useEditor({
   @apply text-lg font-semibold;
 } 
 
-.tiptap li {
+.tiptap ul li {
   @apply list-disc ml-4;
+}
+
+.tiptap ol li {
+  @apply list-decimal ml-4
+}
+
+.tiptap li * {
+  @apply inline space-x-2;
 }
 </style>

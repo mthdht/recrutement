@@ -27,7 +27,7 @@ const props = defineProps<{
 
             <div class="grid gap-3">
                 <Label for="description">Description <span class="text-red-500">*</span></Label>
-                <TipTap v-model="form.description"></TipTap>
+                <TipTap v-model="form.description" class="max-h-108 overflow-auto"></TipTap>
                 <InputError v-if="form.errors.description" :message="form.errors.description" />
             </div>
 
