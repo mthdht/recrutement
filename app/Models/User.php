@@ -52,5 +52,21 @@ class User extends Authenticatable
         return $this->belongsToMany(Organization::class);
     }
 
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
+
+    public function jobOffersApplied()
+    {
+        return $this->belongsToMany(JobOffer::class, 'applications')->withTimestamps()->withPivot([
+            'cv', 'cover_letter', 'applied_at', 'status', 'notes'
+        ]);
+    }
     
 }
