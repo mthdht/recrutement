@@ -76,7 +76,7 @@ export interface JobOffer {
     working_hours?: string; 
     salary?: string; // 
     status: 'draft' | 'published' | 'archived'; 
-    published_at: string | null; 
+    published_at: string | number; 
     establishment_id: number; 
 }
 

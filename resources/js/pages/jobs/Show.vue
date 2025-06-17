@@ -5,8 +5,9 @@ import { Head, Link } from '@inertiajs/vue3';
 import Button from '@/components/ui/button/Button.vue';
 import { Trash } from 'lucide-vue-next';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogFooter, DialogTrigger, DialogTitle } from '@/components/ui/dialog';
-import { computed, ref } from 'vue';
-import { Input } from '@/components/ui/input';
+import { ref } from 'vue';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 
 const props = defineProps<{
@@ -90,23 +91,73 @@ const search = ref('')
             </Dialog>
         </template>
 
-        <div class="flex h-full flex-1 flex-col gap-8 p-4">
+        <div class="flex h-full flex-1 flex-col gap-8 p-8">
             <div class="relative min-h-[100vh] flex-1 md:min-h-min  space-y-6">
                 <div class="space-y-1">
-                    <h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white flex justify-between"> 
-                        {{ jobOffer.title }}
-                        <Button asChild class="bg-emerald-500 hover:bg-emerald-400">
+                    <h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white flex gap-16"> 
+                        <span class="flex gap-2 items-center">
+                            <div class="status size-5 rounded-full" :class="[props.jobOffer.published_at ? 'bg-emerald-500': 'bg-yellow-500']"></div>
+                            {{ jobOffer.title }}
+                        </span>
+                        <!-- <Button asChild class="bg-emerald-500 hover:bg-emerald-400">
                             <Link :href="route('organizations.establishments.jobs.create', {organization: organization.id, establishment: establishment.id})">
                                 Ajouter un candidat
                             </Link>
-                        </Button>
+                        </Button> -->
+                        <div class="infos flex gap-2">
+                            <Badge variant="secondary">
+                                {{ props.jobOffer.contract_type }}
+                            </Badge>
+
+                            <Badge variant="secondary" v-if="props.jobOffer.working_hours">
+                                {{ props.jobOffer.working_hours }}
+                            </Badge>
+
+                            <Badge variant="secondary" v-if="props.jobOffer.salary">
+                                {{ props.jobOffer.salary }}
+                            </Badge>
+                        </div>
                     </h1>
-                    <p class="text-muted-foreground text-sm">Liste des offres d'emploi enregistrées dans votre établissement.</p>
+                    <p 
+                        class="text-muted-foreground text-sm italic" 
+                        v-if="props.jobOffer.published_at"
+                    >
+                        Publié le {{ new Date(props.jobOffer.published_at).toLocaleDateString("fr-FR", {year: "numeric", month: "long", day: "numeric",}) }}
+                    </p>
+
+                    <p 
+                        class="text-muted-foreground text-sm italic" 
+                        v-else
+                    >
+                        Non publié
+                    </p>
+                    
                 </div>
 
-                <div class="grid auto-rows-min gap-4 md:grid-cols-3 xl:grid-cols-4">
+                <div class="">
                     
-
+                    <Tabs default-value="description" class="">
+                        <TabsList class="">
+                            <TabsTrigger value="description" class="">
+                                Description
+                            </TabsTrigger>
+                            <TabsTrigger value="candidates" class="">
+                                Candidats
+                            </TabsTrigger>
+                            <TabsTrigger value="diffusion" class="">
+                                Diffusion
+                            </TabsTrigger>
+                        </TabsList>
+                        <TabsContent value="description">
+                            {{ props.jobOffer.description }}
+                        </TabsContent>
+                        <TabsContent value="candidates">
+                            Change your password here.
+                        </TabsContent>
+                        <TabsContent value="diffusion">
+                            Change your password here.
+                        </TabsContent>
+                    </Tabs>
                     
 
                     <!-- <div class="no-establishments h-56 border rounded-xl flex flex-col items-center justify-center gap-8 col-span-full p-8" v-if="!jobOffers?.length">
