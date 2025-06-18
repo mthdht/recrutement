@@ -2,6 +2,7 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { type Establishment, type BreadcrumbItem, type Organization, JobOffer } from '@/types';
+import CandidateForm from '@/components/CandidateForm.vue';
 
 const props = defineProps<{
   organization: Organization;
@@ -10,14 +11,11 @@ const props = defineProps<{
 }>();
 
 const form = useForm({
-  title: '',
-  description: '',
-  contract_type: '',
-  start_date: '',
-  end_date: '',
-  working_hours: '',
-  salary: '',
-  status: 'draft',
+  last_name: '',
+  first_name: '',
+  cv: '',
+  phone: '',
+  bio: '',
 });
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -25,12 +23,12 @@ const breadcrumbs: BreadcrumbItem[] = [
   { title: props.organization.name, href: route('organizations.show', { organization: props.organization.id }) },
   { title: props.establishment.name, href: route('organizations.establishments.show', { organization: props.organization.id, establishment: props.establishment.id }) },
   { title: props.jobOffer.title, href: route('organizations.establishments.jobs.show', { organization: props.organization.id, establishment: props.establishment.id, jobOffer: props.jobOffer.id }) },
-  { title: 'Créer une candidat', href: ''},
+  { title: 'Créer un candidat', href: ''},
 ];
 </script>
 
 <template>
-  <Head title="Créer un établissement" />
+  <Head title="Créer un candidat" />
   <AppLayout :breadcrumbs="breadcrumbs">
     <div class="p-4">
       <CandidateForm

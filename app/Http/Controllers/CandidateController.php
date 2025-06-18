@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCandidateRequest;
-use App\Http\Requests\UpdateCandidateRequest;
+use App\Http\Requests\CandidateRequest;
 use App\Models\Establishment;
 use App\Models\JobOffer;
 use App\Models\Organization;
@@ -37,9 +36,9 @@ class CandidateController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCandidateRequest $request)
+    public function store(CandidateRequest $request)
     {
-        //
+        dd('ok');
     }
 
     /**
@@ -61,7 +60,7 @@ class CandidateController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCandidateRequest $request, Candidate $candidat)
+    public function update(CandidateRequest $request, Candidate $candidat)
     {
         //
     }
