@@ -24,8 +24,9 @@ class CandidateRequest extends FormRequest
         return [
             'last_name' => ['required', 'string', 'max:255'],
             'first_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'unique:users'],
             'phone' => ['nullable','string', 'max:20'],
-            'cv' => ['nullable', 'file'],
+            'cv' => ['nullable', 'mimes:pdf'],
             'bio' => ['nullable', 'string']
         ];
     }
@@ -40,6 +41,7 @@ class CandidateRequest extends FormRequest
         return [
             'last_name.required' => 'A last name is required',
             'first_name.required' => 'A first name is required',
+            'email.required' => 'An email is required',
         ];
     }
 

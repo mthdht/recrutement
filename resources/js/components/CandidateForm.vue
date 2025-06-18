@@ -32,22 +32,28 @@ const props = defineProps<{
 
             <div class="flex gap-4">
                 <div class="grid gap-3 w-1/2">
-                    <Label for="phone">Téléphone<span class="text-red-500">*</span></Label>
-                    <Input id="phone" v-model="form.phone" :aria-invalid="!!form.errors.phone" />
-                    <InputError v-if="form.errors.phone" :message="form.errors.phone" />
+                    <Label for="email">Email<span class="text-red-500">*</span></Label>
+                    <Input id="email" v-model="form.email" :aria-invalid="!!form.errors.email" type="email"/>
+                    <InputError v-if="form.errors.email" :message="form.errors.email" />
                 </div>
 
                 <div class="grid gap-3 w-1/2">
-                    <Label for="cv">CV<span class="text-red-500">*</span></Label>
-                    <Input id="cv" v-model="form.cv" :aria-invalid="!!form.errors.cv" type="file"/>
-                    <InputError v-if="form.errors.cv" :message="form.errors.cv" />
-                </div>
+                    <Label for="phone">Téléphone</Label>
+                    <Input id="phone" v-model="form.phone" :aria-invalid="!!form.errors.phone" />
+                    <InputError v-if="form.errors.phone" :message="form.errors.phone" />
+                </div> 
             </div>
 
             <div class="grid gap-3">
                 <Label for="bio">Bio</Label>
                 <TipTap v-model="form.bio" class="max-h-108 overflow-auto"></TipTap>
                 <InputError v-if="form.errors.bio" :message="form.errors.bio" />
+            </div>
+
+            <div class="grid gap-3">
+                <Label for="cv">CV<span class="text-red-500">*</span></Label>
+                <Input id="cv" @change="(e: Event) => $emit('updatedCV', (e.target as HTMLInputElement)?.files?.[0] || null)" :aria-invalid="!!form.errors.cv" type="file"/>
+                <InputError v-if="form.errors.cv" :message="form.errors.cv" />
             </div>
         </div>
 

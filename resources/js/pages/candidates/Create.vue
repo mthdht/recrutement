@@ -13,7 +13,8 @@ const props = defineProps<{
 const form = useForm({
   last_name: '',
   first_name: '',
-  cv: '',
+  email: '',
+  cv: null,
   phone: '',
   bio: '',
 });
@@ -34,6 +35,7 @@ const breadcrumbs: BreadcrumbItem[] = [
       <CandidateForm
         :form="form"
         mode="create"
+        @updatedCV="(cv) => form.cv = cv"
         @submit="form.post(route('organizations.establishments.jobs.candidates.store', { organization: props.organization.id, establishment: props.establishment.id, jobOffer: props.jobOffer.id }))"
       />
     </div>
