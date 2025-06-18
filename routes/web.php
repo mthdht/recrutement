@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\EstablishmentController;
 use App\Http\Controllers\JobOfferController;
 use App\Http\Controllers\OrganizationController;
@@ -23,6 +24,12 @@ Route::middleware('auth')->group(function () {
     Route::resource('organizations', OrganizationController::class);
     Route::resource('organizations.establishments', EstablishmentController::class);
     Route::resource('organizations.establishments.jobs', JobOfferController::class)->parameters([
+        'jobs' => 'jobOffer'
+    ]);
+    Route::resource('organizations.establishments.jobs.applications', JobOfferController::class)->parameters([
+        'jobs' => 'jobOffer'
+    ]);
+    Route::resource('organizations.establishments.jobs.candidates', CandidateController::class)->parameters([
         'jobs' => 'jobOffer'
     ]);
 });

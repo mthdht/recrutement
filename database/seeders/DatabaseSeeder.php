@@ -8,7 +8,6 @@ use App\Models\Organization;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -38,10 +37,11 @@ class DatabaseSeeder extends Seeder
             ]);
 
 
-        // $max = User::factory()->create([
-        //     'name' => 'max',
-        //     'email' => 'max@example.com',
-        // ]);
+        $max = User::factory()->create([
+            'name' => 'max',
+            'email' => 'max@example.com',
+            'role' => 'candidate'
+        ]);
 
         // $eric = User::factory()->create([
         //     'name' => 'eric',

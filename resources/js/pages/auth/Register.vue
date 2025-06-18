@@ -4,6 +4,7 @@ import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import AuthBase from '@/layouts/AuthLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
@@ -13,6 +14,7 @@ const form = useForm({
     email: '',
     password: '',
     password_confirmation: '',
+    role: 'candidate'
 });
 
 const submit = () => {
@@ -32,6 +34,21 @@ const submit = () => {
                     <Label for="name">Name</Label>
                     <Input id="name" type="text" required autofocus :tabindex="1" autocomplete="name" v-model="form.name" placeholder="Full name" />
                     <InputError :message="form.errors.name" />
+                </div>
+
+                <div class="grid gap-2">
+                    <Label for="role">Role</Label>
+                    <Select >
+                        <SelectTrigger class="w-full">
+                            <SelectValue placeholder="Choisir un rôle"></SelectValue>
+                        </SelectTrigger>
+
+                        <SelectContent>
+                            <SelectItem value="candidate">Candidat</SelectItem>
+                            <SelectItem value="recruiter">Recruteur</SelectItem>
+                        </SelectContent>
+                    </Select>
+                    <InputError :message="form.errors.role" />
                 </div>
 
                 <div class="grid gap-2">

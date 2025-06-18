@@ -152,7 +152,16 @@ const search = ref('')
                             {{ props.jobOffer.description }}
                         </TabsContent>
                         <TabsContent value="candidates">
-                            Change your password here.
+                            <Button asChild>
+                                <Link :href="route('organizations.establishments.jobs.candidates.create', {
+                                        organization: organization.id,
+                                        establishment: establishment.id,
+                                        jobOffer: jobOffer.id
+                                    })"
+                                >
+                                    Add candidates
+                                </Link>
+                            </Button>
                         </TabsContent>
                         <TabsContent value="diffusion">
                             Change your password here.

@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
-            $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete(); // Candidat
             $table->foreignId('job_offer_id')->constrained()->cascadeOnDelete();
 

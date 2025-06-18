@@ -27,4 +27,9 @@ class JobOffer extends Model
     {
         return $this->belongsTo(Establishment::class);
     }
+
+    public function candidates() 
+    {
+        return $this->belongsToMany(User::class, 'applications')->using(Application::class);
+    }
 }
