@@ -3,12 +3,15 @@ import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/vue3';
+import { type SharedData, type User, type NavItem } from '@/types';
+import { Link, usePage } from '@inertiajs/vue3';
 import { BookOpen, Folder, LayoutGrid, Group } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
 
-const mainNavItems: NavItem[] = [
+const page = usePage<SharedData>();
+const user = page.props.auth.user as User;
+
+const mainRecruiterNavItems: NavItem[] = [
     {
         title: 'Dashboard',
         href: '/dashboard',
@@ -17,6 +20,19 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Organisations',
         href: '/organizations',
+        icon: Group,
+    },
+];
+
+const mainCandidateNavItems: NavItem[] = [
+    {
+        title: 'Dashboard',
+        href: '/dashboard',
+        icon: LayoutGrid,
+    },
+    {
+        title: 'Candidatures',
+        href: '/applications',
         icon: Group,
     },
 ];
@@ -50,7 +66,7 @@ const footerNavItems: NavItem[] = [
         </SidebarHeader>
 
         <SidebarContent>
-            <NavMain :items="mainNavItems" />
+            <NavMain :items="user.role === 'recruiter' ? mainRecruiterNavItems : mainCandidateNavItems" />
         </SidebarContent>
 
         <SidebarFooter>
