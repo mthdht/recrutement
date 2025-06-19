@@ -30,6 +30,6 @@ class JobOffer extends Model
 
     public function candidates() 
     {
-        return $this->belongsToMany(User::class, 'applications')->using(Application::class);
+        return $this->belongsToMany(User::class, 'applications')->as('applications')->withPivot('cv', 'cover_letter', 'applied_at', 'status', 'notes');
     }
 }

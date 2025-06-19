@@ -8,6 +8,7 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, Di
 import { ref } from 'vue';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card } from '@/components/ui/card';
 
 
 const props = defineProps<{
@@ -134,50 +135,57 @@ const search = ref('')
                     
                 </div>
 
-                <div class="">
-                    
-                    <Tabs default-value="description" class="">
-                        <TabsList class="">
-                            <TabsTrigger value="description" class="">
-                                Description
-                            </TabsTrigger>
-                            <TabsTrigger value="candidates" class="">
-                                Candidats
-                            </TabsTrigger>
-                            <TabsTrigger value="diffusion" class="">
-                                Diffusion
-                            </TabsTrigger>
-                        </TabsList>
-                        <TabsContent value="description">
-                            {{ props.jobOffer.description }}
-                        </TabsContent>
-                        <TabsContent value="candidates">
-                            <Button asChild>
-                                <Link :href="route('organizations.establishments.jobs.candidates.create', {
-                                        organization: organization.id,
-                                        establishment: establishment.id,
-                                        jobOffer: jobOffer.id
-                                    })"
-                                >
-                                    Add candidates
-                                </Link>
-                            </Button>
-                        </TabsContent>
-                        <TabsContent value="diffusion">
-                            Change your password here.
-                        </TabsContent>
-                    </Tabs>
+                <Tabs default-value="description" class="">
+                    <TabsList class="">
+                        <TabsTrigger value="description" class="">
+                            Description
+                        </TabsTrigger>
+                        <TabsTrigger value="candidates" class="">
+                            Candidats
+                        </TabsTrigger>
+                        <TabsTrigger value="diffusion" class="">
+                            Diffusion
+                        </TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="description">
+                        {{ props.jobOffer.description }}
+                    </TabsContent>
+                    <TabsContent value="candidates">
+                        <!-- <Button asChild>
+                            <Link :href="route('organizations.establishments.jobs.candidates.create', {
+                                    organization: organization.id,
+                                    establishment: establishment.id,
+                                    jobOffer: jobOffer.id
+                                })"
+                            >
+                                Add candidates
+                            </Link>
+                        </Button> -->
+                        <div class="grid grid-cols-4">
+
+                            <Card v-for="candidate in jobOffer.candidates" class="p-4">
+                                <h3>{{ candidate.name }}</h3>
+
+                            </Card>
+
+                            <div class="no-candidates h-56 border rounded-xl flex flex-col items-center justify-center gap-8 col-span-full p-8" v-if="!jobOffer.candidates?.length">
+                                <h3 class="font-semibold">Oops!! Il semble qu'il n'y ai pas de candidats pour cette offre.</h3>
+
+                                <Button class="bg-emerald-500 hover:bg-emerald-400 font-semibold" asChild>
+                                    <Link :href="route('organizations.establishments.jobs.create', {organization: props.organization.id, establishment: establishment.id})">Ajouter un offre d'emploi</Link>
+                                </Button>
+                            </div>
+                        </div>
+                    </TabsContent>
+                    <TabsContent value="diffusion">
+                        Change your password here.
+                    </TabsContent>
+                </Tabs>
                     
 
-                    <!-- <div class="no-establishments h-56 border rounded-xl flex flex-col items-center justify-center gap-8 col-span-full p-8" v-if="!jobOffers?.length">
-                        <h3 class="font-semibold">Oops!! Il semble qu'il n'y ai pas d'offres d'emploi de créer.</h3>
-
-                        <Button class="bg-emerald-500 hover:bg-emerald-400 font-semibold" asChild>
-                            <Link :href="route('organizations.establishments.jobs.create', {organization: props.organization.id, establishment: establishment.id})">Ajouter un offre d'emploi</Link>
-                        </Button>
-                    </div> -->
-                    
-                </div>
+                
+                
+                
             </div>
         </div>
     </AppLayout>

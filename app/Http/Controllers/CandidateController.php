@@ -62,6 +62,8 @@ class CandidateController extends Controller
             'bio' => $request->bio,
         ]);
 
+        $jobOffer->candidates()->attach($user);
+
         return redirect()->route('organizations.establishments.jobs.show', [$organization, $establishment, $jobOffer]);
     }
 

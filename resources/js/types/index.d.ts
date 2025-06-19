@@ -77,7 +77,8 @@ export interface JobOffer {
     salary?: string; // 
     status: 'draft' | 'published' | 'archived'; 
     published_at: string | number; 
-    establishment_id: number; 
+    establishment_id: number;
+    candidates: User[]
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;

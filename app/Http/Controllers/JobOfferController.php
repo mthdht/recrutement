@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\JobOffer;
 use App\Http\Requests\StoreJobRequest;
 use App\Http\Requests\UpdateJobRequest;
+use App\Models\Application;
 use App\Models\Establishment;
 use App\Models\Organization;
 use Illuminate\Support\Facades\Gate;
@@ -63,7 +64,7 @@ class JobOfferController extends Controller
         return Inertia::render('jobs/Show', [
             'organization' => $organization,
             'establishment' => $establishment,
-            'jobOffer' => $jobOffer,
+            'jobOffer' => $jobOffer->load('candidates'),
         ]);
     }
 
