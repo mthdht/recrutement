@@ -14,6 +14,8 @@ class Application extends Model
         'user_id', 'job_offer_id', 'cv', 'cover_letter', 'applied_at', 'status', 'notes'
     ];
 
+    protected $with = ['jobOffer'];
+
     public function user()
     {
         return $this->belongsTo(User::class);

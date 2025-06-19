@@ -82,4 +82,14 @@ export interface JobOffer {
     candidates: User[]
 }
 
+export interface Application {
+    id: number;
+    cv?: string;
+    cover_letter?: string;
+    applied_at: string,
+    status?: string;
+    notes?: string;
+    job_offer: JobOffer
+}
+
 export type BreadcrumbItemType = BreadcrumbItem;

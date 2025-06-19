@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\EstablishmentController;
+use App\Http\Controllers\JobController;
 use App\Http\Controllers\JobOfferController;
 use App\Http\Controllers\OrganizationController;
 use Illuminate\Http\Request;
@@ -38,6 +40,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('organizations.establishments.jobs.candidates', CandidateController::class)->parameters([
         'jobs' => 'jobOffer'
     ]);
+    Route::get('jobs', [JobController::class, 'index'])->name('jobs.index');
+    Route::get('applications', [ApplicationController::class, 'index'])->name('applications.index');
+    Route::get('applications/{application}', [ApplicationController::class, 'show'])->name('applications.show');
 });
 
 require __DIR__.'/settings.php';
