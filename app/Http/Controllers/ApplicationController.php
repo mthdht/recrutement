@@ -38,7 +38,7 @@ class ApplicationController extends Controller
      */
     public function show(Application $application)
     {
-        //
+        return Inertia::render('applications/Show', ['application' => $application]);
     }
 
     /**
