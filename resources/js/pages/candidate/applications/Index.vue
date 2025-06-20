@@ -47,7 +47,7 @@ const filteredApplications = computed(() => {
                     <h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white flex justify-between"> 
                         Toutes mes candidatures
                     </h1>
-                    <p class="text-muted-foreground text-sm">Liste des offres d'emploi pour lesquelles j'ai postulé.</p>
+                    <p class="text-muted-foreground text-sm">Liste des offres d'emploi pour lesquelles t'as postulé.</p>
                 </div>
 
                 <div class="grid auto-rows-min gap-4 md:grid-cols-3 xl:grid-cols-4">
@@ -62,7 +62,7 @@ const filteredApplications = computed(() => {
                     </Link>
 
                     <div class="no-organizations h-56 border rounded-xl flex flex-col items-center justify-center gap-8 col-span-full p-8" v-if="!applications.length">
-                        <h3 class="font-semibold">Ops!! Il semble que tu n'as postulé à aucune offre.</h3>
+                        <h3 class="font-semibold">Oops!! Il semble que tu n'as postulé à aucune offre.</h3>
 
                         <Button class="bg-emerald-500 hover:bg-emerald-400 font-semibold" asChild>
                             <Link :href="route('jobs.index')">Voir les offres</Link>

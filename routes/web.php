@@ -40,8 +40,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('organizations.establishments.jobs.candidates', CandidateController::class)->parameters([
         'jobs' => 'jobOffer'
     ]);
-    // Route::get('jobs', [JobController::class, 'index'])->name('jobs.index');
-    // Route::get('jobs/{jobOffer}', [JobController::class, 'show'])->name('jobs.indexshow');
+    Route::get('jobs', [JobController::class, 'index'])->name('jobs.index');
+    Route::get('jobs/{jobOffer}', [JobController::class, 'show'])->name('jobs.show');
+    Route::get('jobs/{jobOffer}/application', [ApplicationController::class, 'create'])->name('applications.create');
     Route::get('applications', [ApplicationController::class, 'index'])->name('applications.index');
     Route::get('applications/{application}', [ApplicationController::class, 'show'])->name('applications.show');
     Route::get('applications/{application}/edit', [ApplicationController::class, 'edit'])->name('applications.edit');

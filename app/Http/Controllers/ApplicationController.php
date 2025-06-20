@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Application;
 use App\Http\Requests\StoreApplicationRequest;
 use App\Http\Requests\UpdateApplicationRequest;
+use App\Models\JobOffer;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class ApplicationController extends Controller
@@ -14,15 +16,15 @@ class ApplicationController extends Controller
      */
     public function index()
     {
-        return Inertia::render('applications/Index', ['applications' => Application::all()]);
+        return Inertia::render('candidate/applications/Index', ['applications' => Auth::user()->applications]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(JobOffer $jobOffer)
     {
-        //
+        return Inertia::render('candidate/applications/Create', ['jobOffer' => $jobOffer]);
     }
 
     /**
@@ -38,7 +40,7 @@ class ApplicationController extends Controller
      */
     public function show(Application $application)
     {
-        return Inertia::render('applications/Show', ['application' => $application]);
+        return Inertia::render('candidate/applications/Show', ['application' => $application]);
     }
 
     /**
