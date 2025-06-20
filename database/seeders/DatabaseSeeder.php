@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        $matt = User::factory()
+        $matt = User::factory()->recruiter()
             ->has(Organization::factory(4)
                 ->has(Establishment::factory(6)
                     ->has(JobOffer::factory(5))))

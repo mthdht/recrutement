@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
-import { type Establishment, type BreadcrumbItem, type Organization, JobOffer } from '@/types';
-import CandidateForm from '@/components/CandidateForm.vue';
+import { type BreadcrumbItem, JobOffer } from '@/types';
 import ApplicationForm from '@/components/ApplicationForm.vue';
 
 const props = defineProps<{
@@ -10,12 +9,8 @@ const props = defineProps<{
 }>();
 
 const form = useForm({
-  last_name: '',
-  first_name: '',
-  email: '',
   cv: null,
-  phone: '',
-  bio: '',
+  cover_letter: ''
 });
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -23,6 +18,10 @@ const breadcrumbs: BreadcrumbItem[] = [
   { title: 'Postuler', href: '' },
   
 ];
+
+const handleSubmit = () => {
+  form.post(route('applications.store', { jobOffer: props.jobOffer.id }))
+}
 </script>
 
 <template>
@@ -33,7 +32,7 @@ const breadcrumbs: BreadcrumbItem[] = [
         :form="form"
         mode="create"
         @updatedCV="(cv) => form.cv = cv"
-        @submit="form.post(route('applications.store', { jobOffer: props.jobOffer.id }))"
+        @submitApplication="handleSubmit"
       />
     </div>
   </AppLayout>

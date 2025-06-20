@@ -32,4 +32,9 @@ class JobOffer extends Model
     {
         return $this->belongsToMany(User::class, 'applications')->as('applications')->withPivot('cv', 'cover_letter', 'applied_at', 'status', 'notes');
     }
+
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
 }

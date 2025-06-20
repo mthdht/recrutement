@@ -14,12 +14,14 @@ const props = defineProps<{
 </script>
 
 <template>
-    <form @submit.prevent="$emit('submit')" class="flex flex-col gap-4">
+    <form @submit.prevent="$emit('submitApplication')" class="flex flex-col gap-4">
         <div class="text-input-wrapper grow space-y-6">
             <div class="grid gap-3">
-                <Label for="bio">Lettre de motivation</Label>
-                <TipTap v-model="form.bio" class="max-h-108 overflow-auto"></TipTap>
-                <InputError v-if="form.errors.bio" :message="form.errors.bio" />
+                <Label for="cover_letter">Lettre de motivation</Label>
+                <TipTap v-model="form.cover_letter" class="max-h-108 overflow-auto"></TipTap>
+                <InputError v-if="form.errors.cover_letter" :message="form.errors.cover_letter" />
+
+                {{ form.cover_letter }}
             </div>
 
             <div class="grid gap-3">
@@ -30,7 +32,7 @@ const props = defineProps<{
         </div>
 
         <Button :disabled="form.processing" type="submit" class="self-center bg-emerald-500 hover:bg-emerald-400">
-        {{ mode === 'create' ? 'Postuler' : 'Modifier' }}
+            {{ mode === 'create' ? 'Postuler' : 'Modifier' }}
         </Button>
     </form>
 </template>

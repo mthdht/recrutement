@@ -8,7 +8,6 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, Di
 import { ref } from 'vue';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card } from '@/components/ui/card';
 
 
 const props = defineProps<{
@@ -127,9 +126,10 @@ const breadcrumbs: BreadcrumbItem[] = [
                     <TabsContent value="description">
                         {{ props.application.job_offer.description }}
                     </TabsContent>
-                    <TabsContent value="candidates">
+                    <TabsContent value="application">
                         <div class="grid grid-cols-4">
-                            infos
+                            {{ application }}
+                            {{ application.cover_letter }}
                         </div>
                     </TabsContent>
                 </Tabs>

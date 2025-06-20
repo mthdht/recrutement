@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::get('jobs', [JobController::class, 'index'])->name('jobs.index');
     Route::get('jobs/{jobOffer}', [JobController::class, 'show'])->name('jobs.show');
     Route::get('jobs/{jobOffer}/application', [ApplicationController::class, 'create'])->name('applications.create');
+    Route::post('jobs/{jobOffer}/application', [ApplicationController::class, 'store'])->name('applications.store');
     Route::get('applications', [ApplicationController::class, 'index'])->name('applications.index');
     Route::get('applications/{application}', [ApplicationController::class, 'show'])->name('applications.show');
     Route::get('applications/{application}/edit', [ApplicationController::class, 'edit'])->name('applications.edit');

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Application;
-use App\Http\Requests\StoreApplicationRequest;
+use App\Http\Requests\ApplicationRequest;
 use App\Http\Requests\UpdateApplicationRequest;
 use App\Models\JobOffer;
 use Illuminate\Support\Facades\Auth;
@@ -30,9 +30,23 @@ class ApplicationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreApplicationRequest $request)
+    public function store(ApplicationRequest $request, JobOffer $jobOffer)
     {
-        //
+        $path = '';
+        if ($request->hasFile('cv')) {
+            $path = $request->file('cv')->store('cv');
+        }
+
+        $application = $jobOffer->applications()->create([
+            'cv' => $path,
+            'cover_letter' => $request->cover_letter,
+            'applied_at' => now(),
+            'status' => 'pending',
+            'user_id' => Auth::id()
+        ]);
+       
+
+        return redirect()->route('applications.show', [$application]);
     }
 
     /**

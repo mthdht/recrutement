@@ -151,8 +151,10 @@ import TaskList from '@tiptap/extension-task-list'
 import { Undo2, Redo2, ChevronDown, List, ListOrdered, ListTodo } from 'lucide-vue-next'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from './ui/dropdown-menu'
 
+const model = defineModel()
+
 const editor = useEditor({
-  content: "<p>I'm running Tiptap with Vue.js. 🎉</p>",
+  content: model.value,
   extensions: [
     StarterKit, 
     TaskList, 
@@ -160,6 +162,12 @@ const editor = useEditor({
           nested: true,
     })
   ],
+  onUpdate: () => {
+      model.value = editor.value.getHTML()
+
+      // JSON
+      // this.$emit('update:modelValue', this.editor.getJSON())
+    },
 })
 </script>
 

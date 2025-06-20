@@ -48,4 +48,11 @@ class UserFactory extends Factory
             'role' => 'candidate',
         ]);
     }
+
+    public function recruiter(): static
+    {
+        return $this->state(fn () => [
+            'role' => 'recruiter',
+        ]);
+    }
 }

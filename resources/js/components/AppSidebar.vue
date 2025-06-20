@@ -66,6 +66,7 @@ const footerNavItems: NavItem[] = [
         </SidebarHeader>
 
         <SidebarContent>
+            {{ user.role }}
             <NavMain :items="user.role === 'recruiter' ? mainRecruiterNavItems : mainCandidateNavItems" />
         </SidebarContent>
 
