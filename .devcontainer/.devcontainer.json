@@ -1,0 +1,23 @@
+{
+  "name": "Laravel Dev (SQLite)",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "workspaceFolder": "/workspace",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bmewburn.vscode-intelephense-client",
+        "mikestead.dotenv",
+        "mehedidracula.php-namespace-resolver",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  },
+
+  "postCreateCommand": "composer install && php artisan key:generate",
+
+  "forwardPorts": [8000],
+  "remoteUser": "vscode"
+}
