@@ -1,5 +1,5 @@
 {
-  "name": "Laravel Dev (SQLite)",
+  "name": "Laravel + Vue + Vite (SQLite, OpenSSL 3)",
   "build": {
     "dockerfile": "Dockerfile"
   },
@@ -11,13 +11,15 @@
         "bmewburn.vscode-intelephense-client",
         "mikestead.dotenv",
         "mehedidracula.php-namespace-resolver",
-        "ms-azuretools.vscode-docker"
+        "ms-azuretools.vscode-docker",
+        "Vue.volar",
+        "Vue.vscode-typescript-vue-plugin"
       ]
     }
   },
 
-  "postCreateCommand": "composer install && php artisan key:generate",
+  "postCreateCommand": "composer install && npm install && php artisan key:generate && php artisan migrate --force",
 
-  "forwardPorts": [8000],
+  "forwardPorts": [8000, 5173],
   "remoteUser": "vscode"
 }
