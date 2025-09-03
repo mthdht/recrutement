@@ -1,25 +1,27 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/php
 {
-  "name": "Laravel + Vue + Vite (SQLite, OpenSSL 3)",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
-  "workspaceFolder": "/workspace",
+	"name": "PHP",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/php:1-8.2-bullseye",
 
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "bmewburn.vscode-intelephense-client",
-        "mikestead.dotenv",
-        "mehedidracula.php-namespace-resolver",
-        "ms-azuretools.vscode-docker",
-        "Vue.volar",
-        "Vue.vscode-typescript-vue-plugin"
-      ]
-    }
-  },
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
 
-  "postCreateCommand": "composer install && npm install && php artisan key:generate && php artisan migrate --force",
+	// Configure tool-specific properties.
+	// "customizations": {},
 
-  "forwardPorts": [8000, 5173],
-  "remoteUser": "vscode"
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [
+		8080
+	],
+	"features": {
+		"ghcr.io/devcontainers-extra/features/vue-cli:2": {}
+	}
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "sudo chmod a+x \"$(pwd)\" && sudo rm -rf /var/www/html && sudo ln -s \"$(pwd)\" /var/www/html"
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
 }
